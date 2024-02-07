@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react'
 import { Pressable, Text, TextInput, View } from 'react-native'
 
