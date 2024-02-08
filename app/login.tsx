@@ -1,6 +1,7 @@
 
 
 import { ScrollViewStyleReset } from 'expo-router/html';
+import React from 'react';
 import
   {
     KeyboardAvoidingView,
