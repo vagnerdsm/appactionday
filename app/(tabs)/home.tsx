@@ -11,26 +11,19 @@ function TabBarIcon(props: {
   return <FontAwesome size={20} style={{ marginBottom: -3 }} {...props} />;
 }
 
-const FirstRoute = () => (
-  <View style={styles.container}>
-
-    <View style={styles.rowContainer}>
-      <View style={styles.cardMetric}>
-        <FontAwesome name='money' />
-        <View>
+const FirstRoute = () => {
+  return (
+    <View style={styles.container}>
+      <View style={styles.rowContainer}>
+        <View style={styles.cardMetric}>
+          <FontAwesome name='money' />
           <Text style={{ color: '#000' }}>teste</Text>
           <Text style={{ color: '#000' }}>R$450,00</Text>
         </View>
       </View>
-      <View style={styles.cardMetric}>
-        <FontAwesome name='money' />
-        <Text style={{ color: '#000' }}>teste</Text>
-        <Text style={{ color: '#000' }}>R$450,00</Text>
-      </View>
     </View>
-
-  </View>
-);
+  )
+};
 
 const SecondRoute = () => (
   <View style={{ flex: 1 }}>
@@ -79,6 +72,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    alignItems: "center"
   },
   rowContainer: {
     flexDirection: 'row',
