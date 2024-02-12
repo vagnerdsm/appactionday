@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
 import { useColorScheme } from '@/components/useColorScheme';
+import React from 'react';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -14,7 +15,7 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: '/login',
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.

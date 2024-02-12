@@ -1,23 +1,35 @@
-
-
-import { ScrollViewStyleReset } from 'expo-router/html';
+import { KeyboardAvoidingView, Pressable, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import EditScreenInfo from '@/components/EditScreenInfo';
+import { Text, View } from '@/components/Themed';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useState } from 'react';
+import { auth } from '../firebaseConfig';
+import { Link, Redirect } from 'expo-router';
+import { useRouter } from 'expo-router';
 import React from 'react';
-import
-  {
-    KeyboardAvoidingView,
-    View,
-    Text,
-    Image,
-    TextInput,
-    TouchableOpacity,
-    Animated,
-    Keyboard
-  } from 'react-native';
-import { StyleSheet } from 'react-native';
 
 
-export default function Login() {
-  
+
+export default function TabOneScreen() {
+
+  const router = useRouter()
+
+  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  // setEmail('setordeti@actiondaydigital.page')
+  // setPassword('actionday')
+
+  // const auth = getAuth();
+  const signIn = async () => {
+    try {
+      const response = await signInWithEmailAndPassword(auth, email, password)
+      console.log(response)
+      router.replace("/(tabs)/")
+    } catch (error: any) {
+      alert(error.message)
+    }
+  }
+
   return (
     <>
       <KeyboardAvoidingView style={styles.container}>
@@ -29,41 +41,39 @@ export default function Login() {
             source={require('../assets/images/logo.png')}
           />
         </View> */}
-        <Image source={require('../assets/images/logo.png')} style={styles.logoImage}/>
-         
-        {/* <Text style={styles.textHeader}>
-          Bem-Vindo!
-        </Text>
+        {/* <Image source={require('../assets/images/logo.png')} style={styles.logoImage}/> */}
 
-        <Text style={styles.descriptionHeader}>
-          Preencha as informações abaixo para acessar sua conta.
+        {/* <Text style={styles.textHeader}>
+        </Text> */}
+
+        {/* <Text style={styles.descriptionHeader}>
+          <Text></Text>
+          <Text></Text>
+
         </Text> */}
 
 
         <TextInput
+          value={email}
           style={styles.input}
           placeholder="Email"
-          keyboardType="email-address"
-          textContentType="emailAddress"
           autoCapitalize="none"
-          autoCorrect={false}
-          onChangeText={() => {}}
-        />
+          onChangeText={(text) => setEmail(text)}
+        ></TextInput>
 
         <TextInput
+          value={password}
           style={styles.input}
           placeholder="Senha"
           //keyboardType="visible-password"
-          textContentType="password"
           autoCapitalize="none"
-          autoCorrect={false}
           secureTextEntry={true}
-          onChangeText={() => {}}
-        />
+          onChangeText={(text) => setPassword(text)}
+        ></TextInput>
 
-        <TouchableOpacity style={styles.buttonSubmit}>
+        <Pressable style={styles.buttonSubmit} onPress={signIn}>
           <Text style={styles.submitText} >Acessar</Text>
-        </TouchableOpacity>
+        </Pressable>
       </KeyboardAvoidingView>
     </>
   );
@@ -78,7 +88,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#262450'
   },
 
-  logoImage:{
+  logoImage: {
     width: '60%',
     height: 70,
     resizeMode: 'contain',
@@ -92,11 +102,11 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold'
   },
-  
+
   descriptionHeader: {
     width: '90%',
     fontSize: 14,
-    color: '#7B78AA',
+    color: '#FFF',
     marginBottom: 26
   },
 
@@ -137,6 +147,7 @@ const styles = StyleSheet.create({
   },
 
 });
-
-
+function initializeApp(firebaseConfig: any) {
+  throw new Error('Function not implemented.');
+}
 
