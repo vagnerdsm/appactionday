@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, Pressable, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { KeyboardAvoidingView, Pressable, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -24,7 +24,7 @@ export default function TabOneScreen() {
     try {
       const response = await signInWithEmailAndPassword(auth, email, password)
       console.log(response)
-      router.replace("/(tabs)/")
+      router.replace("/(tabs)/home")
     } catch (error: any) {
       alert(error.message)
     }
@@ -41,7 +41,10 @@ export default function TabOneScreen() {
             source={require('../assets/images/logo.png')}
           />
         </View> */}
-        {/* <Image source={require('../assets/images/logo.png')} style={styles.logoImage}/> */}
+        <Image
+              style={styles.logoImage}
+              source={require('../assets/images/logo.png')}
+            />
 
         {/* <Text style={styles.textHeader}>
         </Text> */}
