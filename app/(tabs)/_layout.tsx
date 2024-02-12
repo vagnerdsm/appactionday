@@ -116,6 +116,7 @@ export default function TabLayout() {
         name="config"
         options={{
           title: 'Config',
+          
 
           tabBarIcon: ({ color }) => <TabBarIcon name="cog" color={color} />,
 
@@ -125,23 +126,24 @@ export default function TabLayout() {
               source={require('../../assets/images/rdicon.png')}
             />
           ),
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="calendar"
-                    size={22}
-                    color={'#000'}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+          // headerRight: () => (
+          //   <Link href="/modal" asChild>
+          //     <Pressable>
+          //       {({ pressed }) => (
+          //         <FontAwesome
+          //           name="calendar"
+          //           size={22}
+          //           color={'#000'}
+          //           style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+          //         />
+          //       )}
+          //     </Pressable>
+          //   </Link>
+          // ),
           headerStyle: {
             backgroundColor: "#fff"
           },
+          
         }}
       />
     </Tabs>
