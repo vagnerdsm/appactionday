@@ -1,9 +1,7 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
-import { Pressable, Image, StyleSheet, View } from 'react-native';
-
-import Colors from '@/constants/Colors';
+import { Pressable, Image, StyleSheet } from 'react-native';
 import { useColorScheme } from '@/components/useColorScheme';
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -27,15 +25,23 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
+
+    // Configuracoes Tabs
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: '#0D779E',
         headerShown: true,
         headerTitle: 'Bem vindo!',
         tabBarStyle: {
-          backgroundColor: "#19173D"
+          backgroundColor: "#19173D",
+
         },
+        headerTitleStyle: {
+          color: '#000'
+        }
       }}>
+
+      {/* Tab Painel Inicial(Home) */}
       <Tabs.Screen
         name='home'
         options={{
@@ -54,7 +60,7 @@ export default function TabLayout() {
                   <FontAwesome
                     name="calendar"
                     size={22}
-                    color={Colors[colorScheme ?? 'light'].text}
+                    color={'#000'}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
@@ -62,45 +68,57 @@ export default function TabLayout() {
             </Link>
           ),
           headerStyle: {
-            backgroundColor: "#19173D",
+            backgroundColor: "#fff",
           }
         }}
       />
+
+      {/* Tab Painel Administrativo */}
       <Tabs.Screen
         name='administrativo'
         options={{
           title: "Administrativo",
+
           tabBarIcon: ({ color }) => <TabBarIcon name="money" color={color} />,
+
           headerLeft: () => (
             <Image
               style={styles.imageProfile}
               source={require('../../assets/images/rdicon.png')}
             />
           ),
+
           headerRight: () => (
             <Link href="/modal" asChild>
+
               <Pressable>
                 {({ pressed }) => (
                   <FontAwesome
                     name="calendar"
                     size={22}
-                    color={Colors[colorScheme ?? 'light'].text}
+                    color={'#000'}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
               </Pressable>
+              
             </Link>
+
           ),
           headerStyle: {
-            backgroundColor: "#19173D"
+            backgroundColor: "#fff"
           },
         }}
       />
+
+      {/* Tab Configuracoes */}
       <Tabs.Screen
         name="config"
         options={{
           title: 'Config',
+
           tabBarIcon: ({ color }) => <TabBarIcon name="cog" color={color} />,
+
           headerLeft: () => (
             <Image
               style={styles.imageProfile}
@@ -114,7 +132,7 @@ export default function TabLayout() {
                   <FontAwesome
                     name="calendar"
                     size={22}
-                    color={Colors[colorScheme ?? 'light'].text}
+                    color={'#000'}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
@@ -122,7 +140,7 @@ export default function TabLayout() {
             </Link>
           ),
           headerStyle: {
-            backgroundColor: "#19173D"
+            backgroundColor: "#fff"
           },
         }}
       />

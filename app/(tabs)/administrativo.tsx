@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, Text } from '@/components/Themed';
-import { Pressable, StyleSheet, TextInput, } from 'react-native';
+import { Pressable, StyleSheet, TextInput, View, Text } from 'react-native';
 
 
 export default function TabOneScreen() {

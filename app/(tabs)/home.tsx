@@ -1,28 +1,76 @@
 import React from 'react'
-import { View, Text } from '@/components/Themed'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={20} style={{ marginBottom: -3 }} {...props} />;
-}
+import Card from '@/components/Card';
+import ChartBar from '@/components/BarChart';
+import MetaCard from '@/components/MetaCard';
 
 const FirstRoute = () => {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+
+      {/* Vendas RD e Faturamento Total */}
       <View style={styles.rowContainer}>
-        <View style={styles.cardMetric}>
-          <FontAwesome name='money' />
-          <Text style={{ color: '#000' }}>teste</Text>
-          <Text style={{ color: '#000' }}>R$450,00</Text>
-        </View>
+        <Card
+          icon="money"
+          name="Vendas RD"
+          value="R$400,00"
+          iconColor="#9327F0"
+        />
+        <Card
+          icon="money"
+          name="Faturamento Total"
+          value="R$400,00"
+          iconColor="#61DE70"
+        />
       </View>
-    </View>
-  )
+
+      {/* Ticket Medio e Impressoes */}
+      <View style={styles.rowContainer}>
+        <Card
+          icon="ticket"
+          name="Ticket Médio"
+          value="R$400,00"
+          iconColor="#0062FF"
+        />
+
+        <Card
+          icon="eye"
+          name="Impressões"
+          value="40000"
+          iconColor="#00e6fe"
+        />
+      </View>
+
+      {/* Meta e progresso */}
+      <View style={styles.rowContainer}>
+        <MetaCard />
+      </View>
+
+      {/* Grafico Ticket Medio X Mes */}
+      <View style={styles.rowContainer}>
+
+        <ChartBar
+          title={'Ticket Médio x Mês'}
+          label={['January', 'February', 'March', 'April']}
+          data={[20, 45, 28, 10]}
+        />
+
+      </View>
+
+      {/* Gráfico Vendas por Mês */}
+      <View style={styles.rowContainer}>
+
+        <ChartBar
+          title={'Vendas Por Mês'}
+          label={['January', 'February', 'March', 'April']}
+          data={[10, 20, 30, 40]}
+        />
+
+      </View>
+
+    </ScrollView>
+  );
 };
 
 const SecondRoute = () => (
@@ -38,7 +86,7 @@ const ThirdRoute = () => (
 const renderScene = SceneMap({
   first: FirstRoute,
   second: SecondRoute,
-  third: ThirdRoute
+  third: ThirdRoute,
 });
 
 export default function TabOneScreen() {
@@ -62,6 +110,9 @@ export default function TabOneScreen() {
           {...props}
           style={styles.tabBar}
           indicatorStyle={{ backgroundColor: "#00D7FF" }}
+          labelStyle={{
+            color: '#000'
+          }}
         />
       )}
     />
@@ -69,27 +120,30 @@ export default function TabOneScreen() {
 }
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center"
+
   },
+
   rowContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 12,
-    paddingTop: 10,
-    backgroundColor: '#fff'
+    paddingTop: 16,
+    backgroundColor: '#fff',
   },
-  cardMetric: {
-    width: 160,
-    height: 100,
-    backgroundColor: "#ccc",
-    borderRadius: 8
-  },
+
   tabBar: {
-    backgroundColor: '#19173D',
+    backgroundColor: '#fff',
     borderColor: 'blue'
   },
-})
+
+  graphStyle: {
+    marginVertical: 8,
+    borderRadius: 16,
+  },
+
+});
 
