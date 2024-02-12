@@ -1,19 +1,27 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
+import { Pressable, Image, StyleSheet, View } from 'react-native';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={20} style={{ marginBottom: -3 }} {...props} />;
 }
+
+const styles = StyleSheet.create({
+
+  imageProfile: {
+    width: 32,
+    marginLeft: 12,
+    height: 32,
+    borderRadius: 8,
+  }
+})
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -22,22 +30,30 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
+        headerShown: true,
+        headerTitle: 'Bem vindo!',
+        tabBarStyle: {
+          backgroundColor: "#19173D"
+        },
       }}>
       <Tabs.Screen
-        name="index"
+        name='home'
         options={{
-          title: 'Tab One',
+          title: 'Home',
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          headerLeft: () => (
+            <Image
+              style={styles.imageProfile}
+              source={require('../../assets/images/rdicon.png')}
+            />
+          ),
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
                 {({ pressed }) => (
                   <FontAwesome
-                    name="info-circle"
-                    size={25}
+                    name="calendar"
+                    size={22}
                     color={Colors[colorScheme ?? 'light'].text}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
@@ -45,13 +61,69 @@ export default function TabLayout() {
               </Pressable>
             </Link>
           ),
+          headerStyle: {
+            backgroundColor: "#19173D",
+          }
         }}
       />
       <Tabs.Screen
-        name="two"
+        name='administrativo'
         options={{
-          title: 'Tab Two',
+          title: "Administrativo",
+          tabBarIcon: ({ color }) => <TabBarIcon name="money" color={color} />,
+          headerLeft: () => (
+            <Image
+              style={styles.imageProfile}
+              source={require('../../assets/images/rdicon.png')}
+            />
+          ),
+          headerRight: () => (
+            <Link href="/modal" asChild>
+              <Pressable>
+                {({ pressed }) => (
+                  <FontAwesome
+                    name="calendar"
+                    size={22}
+                    color={Colors[colorScheme ?? 'light'].text}
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                  />
+                )}
+              </Pressable>
+            </Link>
+          ),
+          headerStyle: {
+            backgroundColor: "#19173D"
+          },
+        }}
+      />
+      <Tabs.Screen
+        name="config"
+        options={{
+          title: 'Config',
           tabBarIcon: ({ color }) => <TabBarIcon name="cog" color={color} />,
+          headerLeft: () => (
+            <Image
+              style={styles.imageProfile}
+              source={require('../../assets/images/rdicon.png')}
+            />
+          ),
+          headerRight: () => (
+            <Link href="/modal" asChild>
+              <Pressable>
+                {({ pressed }) => (
+                  <FontAwesome
+                    name="calendar"
+                    size={22}
+                    color={Colors[colorScheme ?? 'light'].text}
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                  />
+                )}
+              </Pressable>
+            </Link>
+          ),
+          headerStyle: {
+            backgroundColor: "#19173D"
+          },
         }}
       />
     </Tabs>
