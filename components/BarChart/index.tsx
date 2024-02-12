@@ -3,9 +3,9 @@ import { BarChart } from "react-native-chart-kit";
 import { Text, View, StyleSheet, Dimensions } from "react-native";
 
 const ChartBar = (props: any) => {
-    const { label, data } = props
+    const { label, data, title } = props;
 
-    const windowWidth = Dimensions.get('window').width - 5
+    const windowWidth = Dimensions.get('window').width - 38;
 
     const chartData = {
         labels: label || "",
@@ -17,7 +17,7 @@ const ChartBar = (props: any) => {
     };
 
     return (
-        <View>
+        <View style={styles.chartContainer}>
             <BarChart
                 data={chartData}
                 chartConfig={{
@@ -31,16 +31,34 @@ const ChartBar = (props: any) => {
                 height={220}
                 withInnerLines={false}
                 showValuesOnTopOfBars={true}
-                withHorizontalLabels={false}
+                withHorizontalLabels={true}
                 yAxisLabel=""
                 yAxisSuffix=""
                 style={{
-                    borderRadius: 8,
+                    borderRadius: 18,
+                    paddingTop: 12,
                 }}
             />
+            <Text style={styles.chartTitle}>{title}</Text>
         </View>
     );
 }
 
+const styles = StyleSheet.create({
+    chartContainer: {
+        position: 'relative',
+        backgroundColor: '#262450',
+        paddingTop: 52,
+        borderRadius: 18,
+        marginBottom: 10
+    },
+    chartTitle: {
+        fontSize: 22,
+        color: '#fff', 
+        position: 'absolute',
+        top: 8, 
+        left: 10, 
+    },
+});
 
-export default ChartBar
+export default ChartBar;
