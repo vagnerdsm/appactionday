@@ -22,8 +22,8 @@ const ChartBar = (props: any) => {
                 data={chartData}
                 chartConfig={{
                     backgroundColor: '#262450',
-                    backgroundGradientFrom: '#262450',
-                    backgroundGradientTo: '#262450',
+                    backgroundGradientFrom: '#174a53',
+                    backgroundGradientTo: '#174a53',
                     color: () => "#00D7FF",
                     labelColor: () => "#fff",
                 }}
@@ -47,7 +47,7 @@ const ChartBar = (props: any) => {
 const styles = StyleSheet.create({
     chartContainer: {
         position: 'relative',
-        backgroundColor: '#262450',
+        backgroundColor: '#174a53',
         paddingTop: 52,
         borderRadius: 18,
         marginBottom: 10

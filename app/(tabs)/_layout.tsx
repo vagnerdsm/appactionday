@@ -29,11 +29,11 @@ export default function TabLayout() {
     // Configuracoes Tabs
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#0D779E',
+        tabBarActiveTintColor: '#00D7FF',
         headerShown: true,
         headerTitle: 'Bem vindo!',
         tabBarStyle: {
-          backgroundColor: "#19173D",
+          backgroundColor: "#fff",
 
         },
         headerTitleStyle: {

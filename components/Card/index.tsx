@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { FontAwesome } from "@expo/vector-icons";
 
 const Card = (props: any) => {
+
     return (
         <View style={styles.cardMetric}>
 
