@@ -4,10 +4,9 @@ import { Stack } from 'expo-router';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
 import FirstRoute from '@/components/(tabs-relatorios)/RelatorioGeral';
 import SecondRoute from '@/components/(tabs-relatorios)/RelatorioDigital';
+import ThirdRoute from '@/components/(tabs-relatorios)/RealtorioComercial';
 
-const ThirdRoute = () => (
-  <View style={{ flex: 1 }} />
-);
+
 
 const renderScene = SceneMap({
   first: FirstRoute,
@@ -26,23 +25,23 @@ export default function TabOneScreen() {
   ]);
 
   return (
- 
-      <TabView
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
-        renderTabBar={props => (
-          <TabBar
-            {...props}
-            style={styles.tabBar}
-            indicatorStyle={{ backgroundColor: "#00D7FF" }}
-            labelStyle={{
-              color: '#000'
-            }}
-          />
-        )}
-      />
+
+    <TabView
+      navigationState={{ index, routes }}
+      renderScene={renderScene}
+      onIndexChange={setIndex}
+      initialLayout={{ width: layout.width }}
+      renderTabBar={props => (
+        <TabBar
+          {...props}
+          style={styles.tabBar}
+          indicatorStyle={{ backgroundColor: "#00D7FF" }}
+          labelStyle={{
+            color: '#000'
+          }}
+        />
+      )}
+    />
   );
 }
 

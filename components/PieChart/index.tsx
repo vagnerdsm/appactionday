@@ -20,24 +20,21 @@ const chartConfig = {
     },
 };
 
-const ChartPie = () => {
-    const screenWidth = Dimensions.get('window').width - 32;
+const ChartPie = (props: any) => {
+    const screenWidth = Dimensions.get('window').width - 48;
 
     const data = [
         {
-            name: "Custo Por Matrícula",
+            name: props.label,
             population: 21,
             color: "rgba(131, 167, 234, 1)",
-            legendFontColor: "#fff",
-            legendFontSize: 15,
         },
         {
             name: "Ticket Médio",
             population: 28,
             color: "#F00",
-            legendFontColor: "#fff",
-            legendFontSize: 15,
         },
+
     ];
 
     return (
@@ -52,7 +49,7 @@ const ChartPie = () => {
                 paddingLeft={"5"}
                 absolute
                 hasLegend={false}
-                center={[82, 12]}
+                center={[82, 2]}
             />
             <View style={styles.legendContainer}>
                 {data.map((item, index) => (
@@ -71,6 +68,7 @@ const ChartPie = () => {
                     </View>
                 ))}
             </View>
+            <Text style={styles.chartTitle}>Titulo</Text>
         </View>
     );
 };
@@ -86,7 +84,7 @@ const styles = StyleSheet.create({
         marginBottom: 18,
     },
     legendContainer: {
-        flexDirection: "row",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
     },
@@ -94,6 +92,13 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         marginRight: 20,
+    },
+    chartTitle: {
+        fontSize: 22,
+        color: '#fff',
+        position: 'absolute',
+        top: 8,
+        left: 10,
     },
 });
 
