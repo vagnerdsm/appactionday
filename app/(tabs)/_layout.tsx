@@ -33,7 +33,7 @@ export default function TabLayout() {
         headerShown: true,
         headerTitle: 'Bem vindo!',
         tabBarStyle: {
-          backgroundColor: "#19173D",
+          backgroundColor: "#FFF",
 
         },
         headerTitleStyle: {
@@ -116,6 +116,7 @@ export default function TabLayout() {
         name="config"
         options={{
           title: 'Config',
+          headerShown: false,
           
 
           tabBarIcon: ({ color }) => <TabBarIcon name="cog" color={color} />,

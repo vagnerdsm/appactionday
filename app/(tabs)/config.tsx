@@ -2,24 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { Text, View } from '@/components/Themed';
 import { Button, Image, TouchableOpacity } from 'react-native';
 import { auth, db } from '../../firebaseConfig';
-import { router } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function TabConfig() {
-  // const imageProfileUrl = userInfo?.photoURL ? userInfo?.photoURL : require('../../assets/images/rdicon.png')
   const username = auth.currentUser?.displayName
   const useremail = auth.currentUser?.email
   const [userInfo, setUserInfo] = useState<any | undefined>(null);
-  const useruid = auth.currentUser?.uid
-  // const imageProfileUrl = userInfo?.photoURL ? userInfo?.photoURL : require('../../assets/images/rdicon.png')
-  const [imagePlace, setImage] = useState("");
+  const useruid = auth.currentUser?.uid.toString()
 
   const signOut = async () => {
     try {
       const response = await auth.signOut();
       console.log(response)
+      setUserInfo("")
       router.replace("/login")
     } catch (error) {
       console.log(error)
@@ -27,7 +26,7 @@ export default function TabConfig() {
   };
 
   const fetchData = async () => {
-    const docRef = doc(db, "users", "SysT7VM9tMfEpHmmEXcSOpT5nHr2");
+    const docRef = doc(db, "users", `${useruid}`);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -39,27 +38,23 @@ export default function TabConfig() {
     }
   };
 
-  const getData = async () => {
-    const querySnapshot = await getDocs(collection(db, "users"));
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
-      setUserInfo(doc.data());
-    });
-  }
-
   useEffect(() => {
     fetchData();
     // getData();
   }, []);
 
+  const toModal = () => {
+    return <Link href="/modal" asChild></Link>
+  }
+
 
   return (
-    <View style={styles.background}>
-      <View style={styles.container}>
+    <SafeAreaView style={styles.background}>
+        <View style={styles.container}>
 
-        <Image style={styles.imageProfile} source={{ uri: `${userInfo.photoURL}`}} />
+          <Image style={styles.imageProfile} source={{ uri: `${userInfo?.photo_url}` }} />
 
-        {/* {imagePlace ? (
+          {/* {imagePlace ? (
           <Image source={{ uri: `${userInfo.photoURL}` }} style={styles.imageProfile} />
         ) : (
           <></>
@@ -67,41 +62,43 @@ export default function TabConfig() {
 
 
 
-        <Text style={styles.textHeader}> {userInfo?.display_name} </Text>
-        <Text style={styles.textEmail}> {userInfo?.email} </Text>
+          <Text style={styles.textHeader}> {userInfo?.display_name} </Text>
+          <Text style={styles.textEmail}> {userInfo?.email} </Text>
 
-        <View style={styles.optionsMenu}>
-          <TouchableOpacity style={styles.buttonMenu}>
-            <View style={styles.buttonContent}>
-              <Text style={styles.buttonText}> Altere seu Nome </Text>
-              <MaterialIcons name="drive-file-rename-outline" size={24} color="white" />
-            </View>
-          </TouchableOpacity>
+          <View style={styles.optionsMenu}>
+            <Link href="/modal" asChild>
+              <TouchableOpacity style={styles.buttonMenu}>
+                <View style={styles.buttonContent}>
+                  <Text style={styles.buttonText}> Altere seu Nome </Text>
+                  <MaterialIcons name="drive-file-rename-outline" size={24} color="white" />
+                </View>
+              </TouchableOpacity>
+            </Link>
 
-          <TouchableOpacity style={styles.buttonMenu}>
-            <View style={styles.buttonContent}>
-              <Text style={styles.buttonText}> Altere seu Email </Text>
-              <MaterialIcons name="email" size={24} color="white" />
-            </View>
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonMenu}>
+              <View style={styles.buttonContent}>
+                <Text style={styles.buttonText}> Altere seu Email </Text>
+                <MaterialIcons name="email" size={24} color="white" />
+              </View>
+            </TouchableOpacity>
 
-          <TouchableOpacity style={styles.buttonMenu}>
-            <View style={styles.buttonContent}>
-              <Text style={styles.buttonText}> Altere sua Senha </Text>
-              <MaterialIcons name="password" size={24} color="white" />
-            </View>
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonMenu}>
+              <View style={styles.buttonContent}>
+                <Text style={styles.buttonText}> Altere sua Senha </Text>
+                <MaterialIcons name="password" size={24} color="white" />
+              </View>
+            </TouchableOpacity>
 
-          <TouchableOpacity style={styles.buttonMenuLogout} onPress={signOut}>
-            <View style={styles.buttonContentLogout}>
-              <Text style={styles.buttonText}> Logout </Text>
-              <MaterialIcons name="logout" size={24} color="white" />
-            </View>
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonMenuLogout} onPress={signOut}>
+              <View style={styles.buttonContentLogout}>
+                <Text style={styles.buttonText}> Logout </Text>
+                <MaterialIcons name="logout" size={24} color="white" />
+              </View>
+            </TouchableOpacity>
+          </View>
+
         </View>
-
-      </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
