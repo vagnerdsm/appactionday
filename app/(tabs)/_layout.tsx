@@ -34,8 +34,14 @@ export default function TabLayout() {
         headerTitle: 'Bem vindo!',
         tabBarStyle: {
           backgroundColor: "#FFF",
+          height: 50
 
         },
+        tabBarLabelStyle: {
+          // fontSize: 12,
+          // fontWeight: "bold",
+          marginBottom: 8,
+          },
         headerTitleStyle: {
           color: '#000'
         }
@@ -116,7 +122,8 @@ export default function TabLayout() {
         name="config"
         options={{
           title: 'Config',
-          headerShown: false,
+          headerShown: true,
+          headerTitle: "Configurações",
           
 
           tabBarIcon: ({ color }) => <TabBarIcon name="cog" color={color} />,
