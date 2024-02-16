@@ -6,6 +6,8 @@ import ChartPie from '@/components/PieChart';
 const ThirdRoute = () => {
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+
+            {/* Oportunidades ganhas e perdidas */}
             <View style={styles.rowContainer}>
                 <Card
                     icon="check-square-o"
@@ -21,6 +23,7 @@ const ThirdRoute = () => {
                 />
             </View>
 
+            {/* Oportunidades em Adamento */}
             <View style={styles.rowContainer}>
                 <Card
                     icon="rotate-right"
@@ -32,12 +35,12 @@ const ThirdRoute = () => {
 
             <View style={styles.rowContainer}>
                 <ChartPie
-                    label='Vendedor 1'
+                    title="Vendas por Vendedor"
+                    label={["Teste"]}
+                    value={[32]}
+                    color={"red"}
                 />
             </View>
-
-
-
         </ScrollView >
     )
 };

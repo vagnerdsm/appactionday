@@ -2,6 +2,7 @@ import React from "react";
 import { PieChart } from "react-native-chart-kit";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
 
+//Config 
 const chartConfig = {
     backgroundGradientFrom: "#174a53",
     backgroundGradientFromOpacity: 0,
@@ -20,21 +21,19 @@ const chartConfig = {
     },
 };
 
+//Componente
 const ChartPie = (props: any) => {
+
+    const { label, value, color, title } = props
+
     const screenWidth = Dimensions.get('window').width - 48;
 
     const data = [
         {
-            name: props.label,
-            population: 21,
-            color: "rgba(131, 167, 234, 1)",
+            name: label || '',
+            population: value || 0,
+            color: color || "rgba(131, 167, 234, 1)",
         },
-        {
-            name: "Ticket Médio",
-            population: 28,
-            color: "#F00",
-        },
-
     ];
 
     return (
@@ -44,12 +43,12 @@ const ChartPie = (props: any) => {
                 width={screenWidth}
                 height={220}
                 chartConfig={chartConfig}
-                accessor={"population"}
-                backgroundColor={"transparent"}
-                paddingLeft={"5"}
+                accessor="population"
+                backgroundColor="transparent"
+                paddingLeft="5"
                 absolute
                 hasLegend={false}
-                center={[82, 2]}
+                center={[75, 7]}
             />
             <View style={styles.legendContainer}>
                 {data.map((item, index) => (
@@ -68,7 +67,7 @@ const ChartPie = (props: any) => {
                     </View>
                 ))}
             </View>
-            <Text style={styles.chartTitle}>Titulo</Text>
+            <Text style={styles.chartTitle}>{title}</Text>
         </View>
     );
 };

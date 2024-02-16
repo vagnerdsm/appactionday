@@ -8,12 +8,12 @@ const Card = (props: any) => {
         <View style={styles.cardMetric}>
 
             <FontAwesome name={props.icon} size={24} color={props.iconColor} />
-            
+
             <View style={styles.textContainer}>
                 <Text style={styles.text}>{props.name}</Text>
                 <Text style={[styles.text, { fontSize: 22, fontWeight: 'bold' }]}>{props.value}</Text>
             </View>
-
+        
         </View>
     );
 }

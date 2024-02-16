@@ -6,8 +6,6 @@ import FirstRoute from '@/components/(tabs-relatorios)/RelatorioGeral';
 import SecondRoute from '@/components/(tabs-relatorios)/RelatorioDigital';
 import ThirdRoute from '@/components/(tabs-relatorios)/RealtorioComercial';
 
-
-
 const renderScene = SceneMap({
   first: FirstRoute,
   second: SecondRoute,
@@ -25,7 +23,6 @@ export default function TabOneScreen() {
   ]);
 
   return (
-
     <TabView
       navigationState={{ index, routes }}
       renderScene={renderScene}

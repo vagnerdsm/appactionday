@@ -56,6 +56,10 @@ const SecondRoute = () => {
 
             <View style={styles.rowContainer}>
                 <ChartPie
+                    title="Vendas por Vendedor"
+                    label={["Teste"]}
+                    value={[32]}
+                    color={"red"}
                 />
             </View>
 
