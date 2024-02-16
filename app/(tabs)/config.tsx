@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Text, View } from '@/components/Themed';
-import { Button, Image, Pressable, Switch, TouchableOpacity } from 'react-native';
+import { Button, Image, Pressable, Switch, TouchableOpacity, useColorScheme } from 'react-native';
 import { auth, db } from '../../firebaseConfig';
 import { Link, Redirect, Stack, router } from 'expo-router';
 import { StyleSheet } from 'react-native';
@@ -8,6 +8,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
+import { useTheme } from '@react-navigation/native';
 
 export default function TabConfig() {
   const username = auth.currentUser?.displayName
@@ -17,6 +18,7 @@ export default function TabConfig() {
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  // const toggleSwitch = () => useTheme();
 
   const signOut = async () => {
     try {
@@ -47,15 +49,12 @@ export default function TabConfig() {
     // getData();
   }, []);
 
-  const toModal = () => {
-    return <Link href="/modal" asChild></Link>
-  }
-
+  const { colors } = useTheme();
 
   return (
-    <SafeAreaView style={styles.background}>
+    <SafeAreaView style={[styles.background]}>
       <Stack.Screen options={{}} />
-      <View style={styles.container}>
+      <View style={[styles.container]}>
 
 
         <Image style={[styles.imageProfile]} source={{ uri: `${userInfo?.photo_url}` }} />
@@ -65,8 +64,6 @@ export default function TabConfig() {
         ) : (
           <></>
         )} */}
-
-
 
         <Text style={styles.textHeader}> {userInfo?.display_name} </Text>
         <Text style={styles.textEmail}> {userInfo?.email} </Text>
@@ -164,6 +161,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#f2f2f2',
     flex: 1,
   },
+  // tag: (tagColor: any) => ({
+  //   backgroundColor: tagColor,
+  // }),
   container: {
     // marginTop: ,
     flex: 1,

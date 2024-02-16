@@ -1,45 +1,83 @@
 import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet, TextInput } from 'react-native';
-import React from 'react'
+import { ActivityIndicator, Platform, Pressable, StyleSheet, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react'
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
+import { auth, db } from '@/firebaseConfig';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { router } from 'expo-router';
 
 export default function ModalScreen() {
+  const useruid = auth.currentUser?.uid.toString()
+  const [userInfo, setUserInfo] = useState<any | undefined>(null);
+  const [displayName, setDisplayName] = useState<any | undefined>(null);
+  const [loading, setLoading] = useState(false)
+
+  const fetchData = async () => {
+    const docRef = doc(db, "users", `${useruid}`);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      setUserInfo(docSnap.data());
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const updateUserData = async () => {
+    setLoading(true);
+    try {
+      const docSnap = await setDoc(doc(db, "users", `${useruid}`), {
+        display_name: `${displayName}`,
+      });
+      router.replace("/(tabs)/config");
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Edite suas informações</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
+      <Text>Nome de exibição</Text>
       <TextInput
-        // value={'email'}
+        // value={userInfo?.display_name}
         style={styles.input}
         placeholder="Nome de Exibição"
         autoCapitalize="none"
-      // onChangeText={(text) => setEmail(text)}
+      onChangeText={(text) => setDisplayName(text)}
+
       ></TextInput>
 
+
+      <Text>Email</Text>
       <TextInput
-        // value={'email'}
+        value={userInfo?.email}
         style={styles.input}
         placeholder="Email"
         autoCapitalize="none"
       // onChangeText={(text) => setEmail(text)}
       ></TextInput>
 
-      <TextInput
-        // value={'email'}
-        style={styles.input}
-        placeholder="Senha"
-        autoCapitalize="none"
-      // onChangeText={(text) => setEmail(text)}
-      ></TextInput>
-
-
-
-      {/* <EditScreenInfo path="app/editProfileModal.tsx" /> */}
-
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      {/* <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} /> */}
+      { loading ?
+        <Pressable style={styles.buttonSubmit} onPress={updateUserData}>
+          <ActivityIndicator size="small" color="#0000ff" />
+        </Pressable>
+        :
+        <Pressable style={styles.buttonSubmit} onPress={updateUserData}>
+          <Text style={styles.submitText}> Alterar </Text>
+        </Pressable>
+      }
+      
     </View>
   );
 }
@@ -51,10 +89,12 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     marginTop: 30
   },
+
   title: {
     fontSize: 20,
     fontWeight: 'bold',
   },
+
   separator: {
     marginVertical: 30,
     height: 1,
