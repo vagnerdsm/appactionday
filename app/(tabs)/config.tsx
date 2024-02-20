@@ -11,8 +11,8 @@ import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
 import { useTheme } from '@react-navigation/native';
 
 export default function TabConfig() {
-  const username = auth.currentUser?.displayName
-  const useremail = auth.currentUser?.email
+  // const username = auth.currentUser?.displayName
+  // const useremail = auth.currentUser?.email
   const [userInfo, setUserInfo] = useState<any | undefined>(null);
   const useruid = auth.currentUser?.uid.toString()
 
@@ -82,7 +82,7 @@ export default function TabConfig() {
             </TouchableOpacity>
           </Link>
 
-          <Link href="/modal" asChild>
+          {/* <Link href="/modal" asChild>
             <TouchableOpacity >
               <View style={[styles.buttonMenu, styles.shadowProp, styles.elevation]}>
                 <View style={styles.buttonContent}>
@@ -91,7 +91,7 @@ export default function TabConfig() {
                 </View>
               </View>
             </TouchableOpacity>
-          </Link>
+          </Link> */}
 
           <Link href="/modal" asChild>
             <TouchableOpacity >

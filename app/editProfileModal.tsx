@@ -33,9 +33,10 @@ export default function ModalScreen() {
   const updateUserData = async () => {
     setLoading(true);
     try {
-      const docSnap = await setDoc(doc(db, "users", `${useruid}`), {
+      const docRef = doc(db, "users", `${useruid}`)
+      const docSnap = await setDoc(docRef, {
         display_name: `${displayName}`,
-      });
+      }, {merge: true});
       router.replace("/(tabs)/config");
     } catch (error) {
       console.error(error);
@@ -59,14 +60,14 @@ export default function ModalScreen() {
       ></TextInput>
 
 
-      <Text>Email</Text>
+      {/* <Text>Email</Text>
       <TextInput
         value={userInfo?.email}
         style={styles.input}
         placeholder="Email"
         autoCapitalize="none"
       // onChangeText={(text) => setEmail(text)}
-      ></TextInput>
+      ></TextInput> */}
 
       { loading ?
         <Pressable style={styles.buttonSubmit} onPress={updateUserData}>
