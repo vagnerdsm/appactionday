@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Text, View } from '@/components/Themed';
 import { Button, Image, Pressable, Switch, TouchableOpacity, useColorScheme } from 'react-native';
 import { auth, db } from '../../firebaseConfig';
@@ -9,10 +9,14 @@ import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
 import { useTheme } from '@react-navigation/native';
+import { userInfosContext } from '@/context/userContext';
+import { User } from 'firebase/auth';
+
 
 export default function TabConfig() {
   // const username = auth.currentUser?.displayName
   // const useremail = auth.currentUser?.email
+
   const [userInfo, setUserInfo] = useState<any | undefined>(null);
   const useruid = auth.currentUser?.uid.toString()
 
@@ -24,7 +28,7 @@ export default function TabConfig() {
     try {
       const response = await auth.signOut();
       console.log(response)
-      setUserInfo("")
+      // setUserInfo("")
       router.replace("/login")
     } catch (error) {
       console.log(error)
@@ -50,7 +54,7 @@ export default function TabConfig() {
   }, []);
 
   const { colors } = useTheme();
-
+  
   return (
     <SafeAreaView style={[styles.background]}>
       <Stack.Screen options={{}} />
@@ -120,8 +124,6 @@ export default function TabConfig() {
               />
             </View>
           </View>
-
-
 
 
           {/* <TouchableOpacity style={[styles.buttonMenu, styles.shadowProp, styles.elevation]}>
@@ -265,3 +267,4 @@ const styles = StyleSheet.create({
   },
 
 });
+

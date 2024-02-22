@@ -44,6 +44,18 @@ export default function RootLayout() {
   return <RootLayoutNav />;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
@@ -58,3 +70,6 @@ function RootLayoutNav() {
     </ThemeProvider>
   );
 }
+
+
+

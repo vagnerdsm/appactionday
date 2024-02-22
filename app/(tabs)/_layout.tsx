@@ -141,7 +141,7 @@ export default function TabLayout() {
         options={{
           title: 'Perfil',
           headerShown: true,
-          headerTitle: "Configurações",
+          headerTitle: "Seu Perfil",
           
 
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
@@ -149,7 +149,7 @@ export default function TabLayout() {
           headerLeft: () => (
             <Image
               style={styles.imageProfile}
-              source={require('../../assets/images/favicon.png')}
+              source={require('../../assets/images/rdicon.png')}
             />
           ),
           // headerRight: () => (
