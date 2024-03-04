@@ -33,7 +33,7 @@ export default function TabLayout() {
         headerShown: true,
         headerTitle: 'Bem vindo!',
         tabBarStyle: {
-          backgroundColor: "#19173D",
+          backgroundColor: "#fff",
 
         },
         headerTitleStyle: {

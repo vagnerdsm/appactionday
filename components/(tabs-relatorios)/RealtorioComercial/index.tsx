@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import Card from '@/components/Card';
-import ChartPie from '@/components/PieChart';
+// import ChartPie from '@/components/PieChart';
 
 const ThirdRoute = () => {
     return (
@@ -34,13 +34,9 @@ const ThirdRoute = () => {
             </View>
 
             <View style={styles.rowContainer}>
-                <ChartPie
-                    title="Vendas por Vendedor"
-                    label={["Teste"]}
-                    value={[32]}
-                    color={"red"}
-                />
+             
             </View>
+
         </ScrollView >
     )
 };

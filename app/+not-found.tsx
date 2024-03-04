@@ -2,8 +2,19 @@ import React from 'react';
 import { Link, Stack } from 'expo-router';
 import { StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
+import apiRequest from './Services/ApiService';
 
 export default function NotFoundScreen() {
+  const fetchData = async () => {
+    try {
+      const result = await apiRequest();
+      console.log(result);
+    } catch (error) {
+      console.error('Erro ao chamar a API:', error);
+    }
+  };
+
+  fetchData()
   return (
     <>
       <Stack.Screen options={{ title: 'Oops!' }} />

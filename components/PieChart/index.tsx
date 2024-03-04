@@ -12,13 +12,7 @@ const chartConfig = {
     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
     strokeWidth: 2,
     decimalPlaces: 0,
-    legend: {
-        enabled: true,
-        position: "bottom",
-        legendFontSize: 15,
-        legendFontColor: "#fff",
-        legendFontWeight: "bold",
-    },
+
 };
 
 //Componente
@@ -35,7 +29,6 @@ const ChartPie = (props: any) => {
             color: color || "rgba(131, 167, 234, 1)",
         },
     ];
-
     return (
         <View style={styles.chartContainer}>
             <PieChart
@@ -43,15 +36,15 @@ const ChartPie = (props: any) => {
                 width={screenWidth}
                 height={220}
                 chartConfig={chartConfig}
-                accessor="population"
-                backgroundColor="transparent"
-                paddingLeft="5"
+                accessor={"population"}
+                backgroundColor={"transparent"}
+                paddingLeft={"5"}
                 absolute
                 hasLegend={false}
                 center={[75, 7]}
             />
             <View style={styles.legendContainer}>
-                {data.map((item, index) => (
+                {data && Array.isArray(data) && data.map((item, index) => (
                     <View key={index} style={styles.legendItem}>
                         <View
                             style={{

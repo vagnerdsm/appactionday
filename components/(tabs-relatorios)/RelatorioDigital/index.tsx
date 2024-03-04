@@ -2,12 +2,12 @@ import React from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import Card from '@/components/Card';
 import ChartBar from '@/components/BarChart';
-import MetaCard from '@/components/MetaCard';
-import ChartPie from '@/components/PieChart';
 
 const SecondRoute = () => {
     return (
+
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+
             <View style={styles.rowContainer}>
                 <Card
                     icon="desktop"
@@ -38,29 +38,20 @@ const SecondRoute = () => {
                 />
             </View>
 
-            <View style={styles.rowContainer}>
+            <View style={styles.columnContainer}>
                 <ChartBar
                     title={'Lead Por Gênero'}
                     label={['Male', 'Female', 'Unknow']}
                     data={[50, 55, 68]}
                 />
-            </View>
 
-            <View style={styles.rowContainer}>
                 <ChartBar
                     title={'Lead Por Idade'}
                     label={['18-24', '35-44', '25-34', '45-54', '65+']}
                     data={[10, 20, 30, 40, 50]}
                 />
-            </View >
 
-            <View style={styles.rowContainer}>
-                <ChartPie
-                    title="Vendas por Vendedor"
-                    label={["Teste"]}
-                    value={[32]}
-                    color={"red"}
-                />
+                
             </View>
 
         </ScrollView >
@@ -79,6 +70,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         gap: 12,
         paddingTop: 16,
+        paddingBottom: 10
+    },
+
+    columnContainer: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 12
     },
 
     tabBar: {

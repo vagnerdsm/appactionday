@@ -40,31 +40,24 @@ const FirstRoute = () => {
                 />
             </View>
 
-            {/* Meta e progresso */}
-            <View style={styles.rowContainer}>
+
+            <View style={styles.columnContainer}>
+                {/* Meta e progresso */}
                 <MetaCard />
-            </View>
 
-            {/* Grafico Ticket Medio X Mes */}
-            <View style={styles.rowContainer}>
-
+                {/* Grafico Ticket Medio X Mes */}
                 <ChartBar
                     title={'Ticket Médio x Mês'}
                     label={['January', 'February', 'March', 'April']}
                     data={[20, 45, 28, 10]}
                 />
 
-            </View>
-
-            {/* Gráfico Vendas por Mês */}
-            <View style={styles.rowContainer}>
-
+                {/* Gráfico Vendas por Mês */}
                 <ChartBar
                     title={'Vendas Por Mês'}
                     label={['January', 'February', 'March', 'April']}
                     data={[10, 20, 30, 40]}
                 />
-
             </View>
 
         </ScrollView>
@@ -83,6 +76,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         gap: 12,
         paddingTop: 16,
+        paddingBottom: 10
+    },
+
+    columnContainer: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 12
     },
 
     graphStyle: {

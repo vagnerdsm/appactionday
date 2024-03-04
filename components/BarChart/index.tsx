@@ -3,23 +3,15 @@ import { BarChart } from "react-native-chart-kit";
 import { Text, View, StyleSheet, Dimensions } from "react-native";
 
 const ChartBar = (props: any) => {
-    const { label, data, title } = props;
+    const { data, title } = props;
 
     const windowWidth = Dimensions.get('window').width - 38;
 
-    const chartData = {
-        labels: label || "",
-        datasets: [
-            {
-                data: data || [],
-            },
-        ],
-    };
 
     return (
         <View style={styles.chartContainer}>
             <BarChart
-                data={chartData}
+                data={data}
                 chartConfig={{
                     backgroundColor: '#262450',
                     backgroundGradientFrom: '#174a53',
@@ -54,10 +46,10 @@ const styles = StyleSheet.create({
     },
     chartTitle: {
         fontSize: 22,
-        color: '#fff', 
+        color: '#fff',
         position: 'absolute',
-        top: 8, 
-        left: 10, 
+        top: 8,
+        left: 10,
     },
 });
 
