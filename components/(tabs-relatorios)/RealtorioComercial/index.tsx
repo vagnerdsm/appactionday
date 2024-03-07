@@ -4,7 +4,7 @@ import Card from '@/components/Card';
 import ChartPie from '@/components/PieChart';
 import useApiRequest from '@/app/Services/ApiService';
 
-function generateColor() {
+const generateColor = () => {
     const letters = '0123456789ABCDEF';
     let color = '#';
 
@@ -44,13 +44,13 @@ const ThirdRoute = () => {
                 <Card
                     icon="check-square-o"
                     name="Oportunidades Ganhas"
-                    value="R$400,00"
+                    value={isLoading ? isLoading : data?.oportuniadades_ganhas}
                     iconColor="#61DE70"
                 />
                 <Card
                     icon="window-close-o"
                     name="Oportunidades Perdidas"
-                    value="R$400,00"
+                    value={isLoading ? isLoading : data?.oportunidades_perdidas}
                     iconColor="#851b20"
                 />
             </View>
@@ -60,12 +60,12 @@ const ThirdRoute = () => {
                 <Card
                     icon="rotate-right"
                     name="Oportunidades em Andamento"
-                    value="R$400,00"
+                    value={isLoading ? isLoading : data?.oportunidades_em_andamento}
                     iconColor="#665d5d"
                 />
             </View>
 
-            <View style={styles.rowContainer}>
+            <View style={styles.columnContainer}>
 
                 {isLoading ? (
                     <Text>Loading...</Text>
@@ -98,7 +98,12 @@ const styles = StyleSheet.create({
         gap: 12,
         paddingTop: 16,
     },
-
+    columnContainer: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 12,
+        paddingTop: 16,
+    },
     tabBar: {
         backgroundColor: '#fff',
         borderColor: 'blue'

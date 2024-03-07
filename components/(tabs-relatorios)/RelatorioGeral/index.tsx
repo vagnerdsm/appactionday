@@ -9,6 +9,7 @@ const FirstRoute = () => {
     const [isLoading, setIsLoading] = useState<any>("Loading...");
 
     useEffect(() => {
+
         const fetchData = async () => {
             try {
                 const fetchedData = await useApiRequest();
@@ -72,21 +73,21 @@ const FirstRoute = () => {
             </View>
 
             {/* Grafico Ticket Medio X Mes */}
-            <View style={styles.rowContainer}>
+            <View style={styles.columnContainer}>
+
                 {isLoading ? (
                     <Text>Loading...</Text>
                 ) :
                     <ChartBar
                         title={'Grafico Ticket Medio X Mes'}
-                        label={data?.ticket_por_mes.map((item: { DATE: String; }) => item.DATE)}
-                        data={data?.ticket_por_mes.map((item: { Faturamento: Number; }) => item.Faturamento)}
+                        label={data?.ticket_por_mes.map((item: { DATE: string; }) => item.DATE)}
+                        data={data?.ticket_por_mes.map((item: { Faturamento: number; }) => item.Faturamento)}
                     />
                 }
 
-            </View>
 
-            {/* Gráfico Vendas por Mês */}
-            <View style={styles.rowContainer}>
+
+                {/* Gráfico Vendas por Mês */}
 
                 {isLoading ? (
                     <Text>Loading...</Text>
@@ -114,6 +115,12 @@ const styles = StyleSheet.create({
     rowContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
+        gap: 12,
+        paddingTop: 16,
+    },
+    columnContainer: {
+        flexDirection: 'column',
+        alignItems: 'center',
         gap: 12,
         paddingTop: 16,
     },

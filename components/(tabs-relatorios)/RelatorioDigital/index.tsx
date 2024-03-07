@@ -38,13 +38,13 @@ const SecondRoute = () => {
                 <Card
                     icon="desktop"
                     name="Leads"
-                    value={data?.lead_face + data?.lead_google}
+                    value={isLoading ? isLoading : data?.lead_face + data?.lead_google}
                     iconColor="#9327F0"
                 />
                 <Card
                     icon="money"
                     name="CPL"
-                    value={formatter.format((data?.cpl_face + data?.cpl_google) / (data?.lead_google + data?.lead_face))}
+                    value={isLoading ? isLoading : formatter.format((data?.cpl_face + data?.cpl_google) / (data?.lead_google + data?.lead_face))}
                     iconColor="#61DE70"
                 />
             </View>
@@ -53,7 +53,7 @@ const SecondRoute = () => {
                 <Card
                     icon="eye"
                     name="impressoes"
-                    value={data?.impressoes}
+                    value={isLoading ? isLoading : data?.impressoes}
                     iconColor="#9327F0"
                 />
                 <Card
