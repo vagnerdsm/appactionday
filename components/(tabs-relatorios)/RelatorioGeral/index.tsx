@@ -1,9 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import Card from '@/components/Card';
 import ChartBar from '@/components/BarChart';
 import MetaCard from '@/components/MetaCard';
+import useApiRequest from '@/app/Services/ApiService';
 const FirstRoute = () => {
+    const [data, setData] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState<any>("Loading...");
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const fetchedData = await useApiRequest();
+
+                setData(fetchedData);
+                setIsLoading(null);
+            } catch (error) {
+                console.error('Erro ao buscar dados:', error);
+                setIsLoading(null);
+            }
+        };
+
+        fetchData();
+    }, [])
+
+
+    const formatter = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    })
+
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
 
@@ -12,13 +38,13 @@ const FirstRoute = () => {
                 <Card
                     icon="money"
                     name="Vendas RD"
-                    value="R$400,00"
+                    value={isLoading ? isLoading : formatter.format(data?.vendas_rd)}
                     iconColor="#9327F0"
                 />
                 <Card
                     icon="money"
                     name="Faturamento Total"
-                    value="R$400,00"
+                    value={isLoading ? isLoading : formatter.format(data?.faturamento_total)}
                     iconColor="#61DE70"
                 />
             </View>
@@ -28,36 +54,50 @@ const FirstRoute = () => {
                 <Card
                     icon="ticket"
                     name="Ticket Médio"
-                    value="R$400,00"
+                    value={isLoading ? isLoading : formatter.format(data?.faturamento_total / data?.vendas_rd)}
                     iconColor="#0062FF"
                 />
 
                 <Card
                     icon="eye"
                     name="Impressões"
-                    value="40000"
+                    value={isLoading ? isLoading : data?.impressoes}
                     iconColor="#00e6fe"
                 />
             </View>
 
-
-            <View style={styles.columnContainer}>
-                {/* Meta e progresso */}
+            {/* Meta e progresso */}
+            <View style={styles.rowContainer}>
                 <MetaCard />
+            </View>
 
-                {/* Grafico Ticket Medio X Mes */}
-                <ChartBar
-                    title={'Ticket Médio x Mês'}
-                    label={['January', 'February', 'March', 'April']}
-                    data={[20, 45, 28, 10]}
-                />
+            {/* Grafico Ticket Medio X Mes */}
+            <View style={styles.rowContainer}>
+                {isLoading ? (
+                    <Text>Loading...</Text>
+                ) :
+                    <ChartBar
+                        title={'Grafico Ticket Medio X Mes'}
+                        label={data?.ticket_por_mes.map((item: { DATE: String; }) => item.DATE)}
+                        data={data?.ticket_por_mes.map((item: { Faturamento: Number; }) => item.Faturamento)}
+                    />
+                }
 
-                {/* Gráfico Vendas por Mês */}
-                <ChartBar
-                    title={'Vendas Por Mês'}
-                    label={['January', 'February', 'March', 'April']}
-                    data={[10, 20, 30, 40]}
-                />
+            </View>
+
+            {/* Gráfico Vendas por Mês */}
+            <View style={styles.rowContainer}>
+
+                {isLoading ? (
+                    <Text>Loading...</Text>
+                ) :
+                    <ChartBar
+                        title={'Vendas Por Mês'}
+                        label={data?.vendas_por_mes.map((item: { DATE: String; }) => item.DATE)}
+                        data={data?.vendas_por_mes.map((item: { Vendas: Number; }) => item.Vendas)}
+                    />
+                }
+
             </View>
 
         </ScrollView>
@@ -76,13 +116,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         gap: 12,
         paddingTop: 16,
-        paddingBottom: 10
-    },
-
-    columnContainer: {
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: 12
     },
 
     graphStyle: {

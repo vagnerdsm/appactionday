@@ -11,7 +11,7 @@ const Card = (props: any) => {
 
             <View style={styles.textContainer}>
                 <Text style={styles.text}>{props.name}</Text>
-                <Text style={[styles.text, { fontSize: 22, fontWeight: 'bold' }]}>{props.value}</Text>
+                <Text style={[styles.text, { fontSize: 18, fontWeight: 'bold' }]}>{props.value}</Text>
             </View>
         
         </View>
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     cardMetric: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: 160,
+        width: 166,
         height: 100,
         backgroundColor: "#fff",
         borderRadius: 8,
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     textContainer: {
         flex: 1,
         justifyContent: 'center',
-        gap: 4,
+        gap: 2,
         paddingLeft: 8,
         backgroundColor: "#fff",
         borderRadius: 8,

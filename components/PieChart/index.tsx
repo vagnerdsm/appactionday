@@ -2,7 +2,6 @@ import React from "react";
 import { PieChart } from "react-native-chart-kit";
 import { View, StyleSheet, Dimensions, Text } from "react-native";
 
-//Config 
 const chartConfig = {
     backgroundGradientFrom: "#174a53",
     backgroundGradientFromOpacity: 0,
@@ -15,20 +14,12 @@ const chartConfig = {
 
 };
 
-//Componente
 const ChartPie = (props: any) => {
 
-    const { label, value, color, title } = props
+    const { data, title } = props
 
     const screenWidth = Dimensions.get('window').width - 48;
 
-    const data = [
-        {
-            name: label || '',
-            population: value || 0,
-            color: color || "rgba(131, 167, 234, 1)",
-        },
-    ];
     return (
         <View style={styles.chartContainer}>
             <PieChart

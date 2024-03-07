@@ -3,15 +3,23 @@ import { BarChart } from "react-native-chart-kit";
 import { Text, View, StyleSheet, Dimensions } from "react-native";
 
 const ChartBar = (props: any) => {
-    const { data, title } = props;
+    const { data, title, label } = props;
 
     const windowWidth = Dimensions.get('window').width - 38;
 
+    const chartData = {
+        labels: label,
+        datasets: [
+            {
+                data: data
+            }
+        ]
+    };
 
     return (
         <View style={styles.chartContainer}>
             <BarChart
-                data={data}
+                data={chartData}
                 chartConfig={{
                     backgroundColor: '#262450',
                     backgroundGradientFrom: '#174a53',

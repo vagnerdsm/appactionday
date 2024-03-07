@@ -1,9 +1,41 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import Card from '@/components/Card';
-// import ChartPie from '@/components/PieChart';
+import ChartPie from '@/components/PieChart';
+import useApiRequest from '@/app/Services/ApiService';
+
+function generateColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+
+    return color;
+
+}
 
 const ThirdRoute = () => {
+    const [data, setData] = useState<any>(null)
+    const [isLoading, setIsLoading] = useState<any>("Loading...")
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const fetchedData = await useApiRequest();
+
+                setData(fetchedData);
+                setIsLoading(null);
+            } catch (error) {
+                console.error('Erro ao buscar dados:', error);
+                setIsLoading(null);
+            }
+        };
+
+        fetchData();
+    }, [])
+
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
 
@@ -34,7 +66,20 @@ const ThirdRoute = () => {
             </View>
 
             <View style={styles.rowContainer}>
-             
+
+                {isLoading ? (
+                    <Text>Loading...</Text>
+                ) :
+                    <ChartPie
+                        title={"Oportunidades por Vendedor"}
+                        data={data?.oportunidades_por_vendedor.map((item: { Oportunidades: number; Vendedor: string }) => ({
+                            name: item.Vendedor,
+                            population: item.Oportunidades,
+                            color: generateColor(),
+                        }))}
+                    />
+                }
+
             </View>
 
         </ScrollView >
