@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
-import Card from '@/components/Card';
-import ChartBar from '@/components/BarChart';
-import MetaCard from '@/components/MetaCard';
 import useApiRequest from '@/app/Services/ApiService';
+import { Card, ChartBar, MetaCard } from '../../../components'
+
+
 const FirstRoute = () => {
     const [data, setData] = useState<any>(null);
     const [isLoading, setIsLoading] = useState<any>("Loading...");
@@ -39,7 +39,7 @@ const FirstRoute = () => {
                 <Card
                     icon="money"
                     name="Vendas RD"
-                    value={isLoading ? isLoading : formatter.format(data?.vendas_rd)}
+                    value={isLoading ? isLoading : data?.vendas_rd}
                     iconColor="#9327F0"
                 />
                 <Card
@@ -69,8 +69,18 @@ const FirstRoute = () => {
 
             {/* Meta e progresso */}
             <View style={styles.rowContainer}>
-                <MetaCard />
+                {data?.meta !== 0 && (
+                    <MetaCard
+                        vendas={isLoading ? isLoading : data?.vendas_rd}
+                        meta={isLoading ? isLoading : data?.meta}
+                        porcentagem={isLoading ? isLoading : `${(data?.vendas_rd / data?.meta) * 100}%`}
+
+                    />
+                )}
             </View>
+
+
+
 
             {/* Grafico Ticket Medio X Mes */}
             <View style={styles.columnContainer}>

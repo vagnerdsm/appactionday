@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
-import Card from '@/components/Card';
-import ChartPie from '@/components/PieChart';
 import useApiRequest from '@/app/Services/ApiService';
+import { Card, ChartPie } from '../../../components'
 
 const generateColor = () => {
     const letters = '0123456789ABCDEF';
@@ -13,7 +12,6 @@ const generateColor = () => {
     }
 
     return color;
-
 }
 
 const ThirdRoute = () => {
@@ -72,6 +70,45 @@ const ThirdRoute = () => {
                 ) :
                     <ChartPie
                         title={"Oportunidades por Vendedor"}
+                        data={data?.venda_por_vendedor.map((item: { Oportunidades: number; Vendedor: string }) => ({
+                            name: item.Vendedor,
+                            population: item.Oportunidades,
+                            color: generateColor(),
+                        }))}
+                    />
+                }
+
+                {isLoading ? (
+                    <Text>Loading...</Text>
+                ) :
+                    <ChartPie
+                        title={"Conversao por Vendedor"}
+                        data={data?.conversao_vendedor_calculo.map((item: { conversao: number; vendedor: string }) => ({
+                            name: item.vendedor,
+                            population: item.conversao,
+                            color: generateColor(),
+                        }))}
+                    />
+                }
+
+                {isLoading ? (
+                    <Text>Loading...</Text>
+                ) :
+                    <ChartPie
+                        title={"Faturamento por Vendedor"}
+                        data={data?.faturamento_por_vendedor.map((item: { Faturamento: number; Vendedor: string }) => ({
+                            name: item.Vendedor,
+                            population: item.Faturamento,
+                            color: generateColor(),
+                        }))}
+                    />
+                }
+
+                {isLoading ? (
+                    <Text>Loading...</Text>
+                ) :
+                    <ChartPie
+                        title={"Oportunidades por Vendedor"}
                         data={data?.oportunidades_por_vendedor.map((item: { Oportunidades: number; Vendedor: string }) => ({
                             name: item.Vendedor,
                             population: item.Oportunidades,
@@ -98,12 +135,14 @@ const styles = StyleSheet.create({
         gap: 12,
         paddingTop: 16,
     },
+
     columnContainer: {
         flexDirection: 'column',
         alignItems: 'center',
         gap: 12,
         paddingTop: 16,
     },
+
     tabBar: {
         backgroundColor: '#fff',
         borderColor: 'blue'

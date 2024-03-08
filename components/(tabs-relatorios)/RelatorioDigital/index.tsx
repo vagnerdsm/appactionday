@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
-import Card from '@/components/Card';
-import ChartBar from '@/components/BarChart';
 import useApiRequest from '@/app/Services/ApiService';
-import ChartPie from '@/components/PieChart';
+import { Card, ChartBar, ChartPie } from '../../../components'
 
 const SecondRoute = () => {
     const [data, setData] = useState<any>(null)
@@ -93,8 +91,8 @@ const SecondRoute = () => {
                         title={"Facebook por objetivo"}
                         data={[
                             {
-                                name: data?.facebook_objetivo.map((item: { OBJETIVO: String; }) => item.OBJETIVO),
-                                population: data?.facebook_objetivo.map((item: { conversoes: Number; }) => item.conversoes),
+                                name: data?.facebook_objetivo.map((item: { OBJETIVO: string; }) => item.OBJETIVO),
+                                population: data?.facebook_objetivo.map((item: { conversoes: number; }) => item.conversoes),
                                 color: '#54F2D4'
                             }
                         ]}
@@ -108,8 +106,8 @@ const SecondRoute = () => {
                     ) :
                         <ChartBar
                             title={'Lead Por Gênero'}
-                            label={data?.lead_genero.map((lead: { gender: any; }) => lead.gender)}
-                            data={data?.lead_genero.map((lead: { conversoes: any; }) => lead.conversoes)}
+                            label={data?.lead_genero.map((lead: { gender: string; }) => lead.gender)}
+                            data={data?.lead_genero.map((lead: { conversoes: number; }) => lead.conversoes)}
                         />
                 }
 
@@ -118,8 +116,8 @@ const SecondRoute = () => {
                 ) :
                     <ChartBar
                         title={'Lead Por Idade'}
-                        label={data?.lead_idade.map((lead: { age: any; }) => lead.age)}
-                        data={data?.lead_idade.map((lead: { conversoes: any; }) => lead.conversoes)}
+                        label={data?.lead_idade.map((lead: { age: string; }) => lead.age)}
+                        data={data?.lead_idade.map((lead: { conversoes: number; }) => lead.conversoes)}
                     />
                 }
 
@@ -128,6 +126,8 @@ const SecondRoute = () => {
         </ScrollView >
     )
 };
+
+export default SecondRoute
 
 const styles = StyleSheet.create({
 
@@ -162,4 +162,3 @@ const styles = StyleSheet.create({
 
 });
 
-export default SecondRoute
