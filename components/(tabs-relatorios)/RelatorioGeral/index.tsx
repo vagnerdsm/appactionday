@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
-import useApiRequest from '@/app/Services/ApiService';
+import useApiRequest from '@/services/ApiService';
 import { Card, ChartBar, MetaCard } from '../../../components'
 
 const FirstRoute = () => {
@@ -23,7 +23,7 @@ const FirstRoute = () => {
 
         fetchData();
     }, [])
-    
+
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL'

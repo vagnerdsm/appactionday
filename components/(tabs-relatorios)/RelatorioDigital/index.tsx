@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
-import useApiRequest from '@/app/Services/ApiService';
+import useApiRequest from '@/services/ApiService';
 import { Card, ChartBar, ChartPie } from '../../../components'
 
 const SecondRoute = () => {

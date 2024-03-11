@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Stack } from 'expo-router';
 import { StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
-import apiRequest from './Services/ApiService';
+import apiRequest from '../services/ApiService';
 
 export default function NotFoundScreen() {
   const fetchData = async () => {
