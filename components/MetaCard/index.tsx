@@ -6,9 +6,10 @@ const MetaCard = (props: any) => {
     const { vendas, meta, porcentagem } = props;
 
     const data = {
-        labels: ["Swim"],
-        data: [0.125]
+        labels: ['teste'],
+        data: [parseFloat(porcentagem)]
     };
+
     return (
         <View style={styles.metaContainer}>
             <View style={styles.textContent}>
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     percentContainer: {
         position: "absolute",
         top: "38%",
-        left: "26%",
+        left: "30%",
     },
 
     valuePercent: {

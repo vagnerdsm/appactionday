@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import useApiRequest from '@/services/ApiService';
 import { Card, ChartBar, MetaCard } from '../../../components'
 
+
+
 const FirstRoute = () => {
     const [data, setData] = useState<any>(null);
     const [isLoading, setIsLoading] = useState<any>("Loading...");
@@ -28,6 +30,10 @@ const FirstRoute = () => {
         style: 'currency',
         currency: 'BRL'
     })
+
+    let formatador = new Intl.NumberFormat('pt-BR',
+        { minimumFractionDigits: 0, maximumFractionDigits: 2 }
+    );
 
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -60,7 +66,7 @@ const FirstRoute = () => {
                 <Card
                     icon="eye"
                     name="Impressões"
-                    value={isLoading ? isLoading : data?.impressoes}
+                    value={isLoading ? isLoading : formatador.format(data?.impressoes)}
                     iconColor="#00e6fe"
                 />
             </View>
@@ -71,14 +77,11 @@ const FirstRoute = () => {
                     <MetaCard
                         vendas={isLoading ? isLoading : data?.vendas_rd}
                         meta={isLoading ? isLoading : data?.meta}
-                        porcentagem={isLoading ? isLoading : `${(data?.vendas_rd / data?.meta) * 100}%`}
+                        porcentagem={isLoading ? isLoading : `${Number(((data?.vendas_rd / data?.meta))).toFixed(2)}%`}
 
                     />
                 )}
             </View>
-
-
-
 
             {/* Grafico Ticket Medio X Mes */}
             <View style={styles.columnContainer}>
@@ -93,8 +96,6 @@ const FirstRoute = () => {
                     />
                 }
 
-
-
                 {/* Gráfico Vendas por Mês */}
 
                 {isLoading ? (
@@ -108,9 +109,6 @@ const FirstRoute = () => {
                 }
 
             </View>
-
-
-
 
         </ScrollView>
     );
