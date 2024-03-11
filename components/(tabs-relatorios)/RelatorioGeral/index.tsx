@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import useApiRequest from '@/app/Services/ApiService';
 import { Card, ChartBar, MetaCard } from '../../../components'
 
-
 const FirstRoute = () => {
     const [data, setData] = useState<any>(null);
     const [isLoading, setIsLoading] = useState<any>("Loading...");
@@ -24,8 +23,7 @@ const FirstRoute = () => {
 
         fetchData();
     }, [])
-
-
+    
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL'
@@ -111,8 +109,12 @@ const FirstRoute = () => {
 
             </View>
 
+
+
+
         </ScrollView>
     );
+
 };
 
 const styles = StyleSheet.create({

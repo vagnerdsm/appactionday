@@ -5,11 +5,9 @@ import { Text, View, StyleSheet } from "react-native";
 const MetaCard = (props: any) => {
     const { vendas, meta, porcentagem } = props;
 
-    const percentValue = parseFloat(porcentagem.replace(/[^0-9.]/g, ''));
-
     const data = {
-        labels: ["Progress"],
-        data: [percentValue],
+        labels: ["Swim"],
+        data: [0.125]
     };
     return (
         <View style={styles.metaContainer}>
@@ -27,11 +25,11 @@ const MetaCard = (props: any) => {
                     strokeWidth={6}
                     radius={52}
                     chartConfig={{
-                        backgroundColor: "#fff",
-                        backgroundGradientFrom: "#fff",
+                        backgroundColor: "#000",
+                        backgroundGradientFrom: "#ffff",
                         backgroundGradientTo: "#fff",
-                        color: () => "#00D7FF",
-                        labelColor: () => "#fff",
+                        color: (opacity = 1) => `rgba(0, 98, 255, ${opacity})`,
+                        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     }}
                     hideLegend={true}
                 />
@@ -77,7 +75,7 @@ const styles = StyleSheet.create({
     percentContainer: {
         position: "absolute",
         top: "38%",
-        left: "35%",
+        left: "26%",
     },
 
     valuePercent: {

@@ -28,6 +28,10 @@ const SecondRoute = () => {
         currency: 'BRL'
     })
 
+    let formatador = new Intl.NumberFormat('pt-BR',
+        { minimumFractionDigits: 0, maximumFractionDigits: 2 }
+    );
+
     return (
 
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -36,7 +40,7 @@ const SecondRoute = () => {
                 <Card
                     icon="desktop"
                     name="Leads"
-                    value={isLoading ? isLoading : data?.lead_face + data?.lead_google}
+                    value={formatador.format(isLoading ? isLoading : data?.lead_face + data?.lead_google)}
                     iconColor="#9327F0"
                 />
                 <Card
@@ -51,7 +55,7 @@ const SecondRoute = () => {
                 <Card
                     icon="eye"
                     name="impressoes"
-                    value={isLoading ? isLoading : data?.impressoes}
+                    value={isLoading ? isLoading : formatador.format(data?.impressoes)}
                     iconColor="#9327F0"
                 />
                 <Card
