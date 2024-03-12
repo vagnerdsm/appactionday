@@ -20,6 +20,7 @@ export const unstable_settings = {
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
+
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -45,17 +46,6 @@ export default function RootLayout() {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
@@ -65,7 +55,7 @@ function RootLayoutNav() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
-        <Stack.Screen name="editProfileModal" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="editProfileModal" options={{ presentation: 'modal', headerTitle: '' }} />
       </Stack>
     </ThemeProvider>
   );

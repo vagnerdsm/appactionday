@@ -1,16 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Text, View } from '@/components/Themed';
 import { Button, Image, Pressable, Switch, TouchableOpacity, useColorScheme } from 'react-native';
-import { auth, db } from '../../firebaseConfig';
 import { Link, Redirect, Stack, router } from 'expo-router';
 import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
 import { useTheme } from '@react-navigation/native';
 import { userInfosContext } from '@/context/userContext';
-import { User } from 'firebase/auth';
 
 
 export default function TabConfig() {
@@ -18,38 +15,38 @@ export default function TabConfig() {
   // const useremail = auth.currentUser?.email
 
   const [userInfo, setUserInfo] = useState<any | undefined>(null);
-  const useruid = auth.currentUser?.uid.toString()
+  // const useruid = auth.currentUser?.uid.toString()
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   // const toggleSwitch = () => useTheme();
 
   const signOut = async () => {
-    try {
-      const response = await auth.signOut();
-      console.log(response)
-      // setUserInfo("")
-      router.replace("/login")
-    } catch (error) {
-      console.log(error)
-    }
+    // try {
+    //   const response = await auth.signOut();
+    //   console.log(response)
+    //   // setUserInfo("")
+    //   router.replace("/login")
+    // } catch (error) {
+    //   console.log(error)
+    // }
   };
 
   const fetchData = async () => {
-    const docRef = doc(db, "users", `${useruid}`);
-    const docSnap = await getDoc(docRef);
+    // const docRef = doc(db, "users", `${useruid}`);
+    // const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-      setUserInfo(docSnap.data());
-    } else {
-      // docSnap.data() will be undefined in this case
-      console.log("No such document!");
-    }
+    // if (docSnap.exists()) {
+    //   console.log("Document data:", docSnap.data());
+    //   setUserInfo(docSnap.data());
+    // } else {
+    //   // docSnap.data() will be undefined in this case
+    //   console.log("No such document!");
+    // }
   };
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
     // getData();
   }, []);
 
@@ -185,7 +182,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: 'black',
     borderWidth: 1,
-    elevation: 15,
+    // elevation: 15,
     shadowColor: '#171717',
 
   },

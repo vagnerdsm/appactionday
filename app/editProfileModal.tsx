@@ -3,44 +3,42 @@ import { ActivityIndicator, Platform, Pressable, StyleSheet, TextInput } from 'r
 import React, { useEffect, useState } from 'react'
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
-import { auth, db } from '@/firebaseConfig';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { router } from 'expo-router';
 
 export default function ModalScreen() {
-  const useruid = auth.currentUser?.uid.toString()
+  // const useruid = auth.currentUser?.uid.toString()
   const [userInfo, setUserInfo] = useState<any | undefined>(null);
   const [displayName, setDisplayName] = useState<any | undefined>(null);
   const [loading, setLoading] = useState(false)
 
   const fetchData = async () => {
-    const docRef = doc(db, "users", `${useruid}`);
-    const docSnap = await getDoc(docRef);
+    // const docRef = doc(db, "users", `${useruid}`);
+    // const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-      setUserInfo(docSnap.data());
-    } else {
-      // docSnap.data() will be undefined in this case
-      console.log("No such document!");
-    }
+    // if (docSnap.exists()) {
+    //   console.log("Document data:", docSnap.data());
+    //   setUserInfo(docSnap.data());
+    // } else {
+    //   // docSnap.data() will be undefined in this case
+    //   console.log("No such document!");
+    // }
   };
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
   }, []);
 
   const updateUserData = async () => {
-    setLoading(true);
-    try {
-      const docRef = doc(db, "users", `${useruid}`)
-      const docSnap = await setDoc(docRef, {
-        display_name: `${displayName}`,
-      }, {merge: true});
-      router.replace("/(tabs)/config");
-    } catch (error) {
-      console.error(error);
-    }
+    // setLoading(true);
+    // try {
+    //   const docRef = doc(db, "users", `${useruid}`)
+    //   const docSnap = await setDoc(docRef, {
+    //     display_name: `${displayName}`,
+    //   }, {merge: true});
+    //   router.replace("/(tabs)/config");
+    // } catch (error) {
+    //   console.error(error);
+    // }
 
   }
 
@@ -49,7 +47,7 @@ export default function ModalScreen() {
       <Text style={styles.title}>Edite suas informações</Text>
       {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
 
-      <Text>Nome de exibição</Text>
+      {/* <Text>Nome de exibição</Text> */}
       <TextInput
         // value={userInfo?.display_name}
         style={styles.input}

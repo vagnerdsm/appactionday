@@ -6,6 +6,10 @@ import ChartBar from '@/components/BarChart';
 import MetaCard from '@/components/MetaCard';
 
 const FirstRoute = () => {
+
+
+
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
 

@@ -1,14 +1,19 @@
-import { KeyboardAvoidingView, Pressable, StyleSheet, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { KeyboardAvoidingView, Pressable, StyleSheet, TextInput, TouchableOpacity, Image, ActivityIndicator, AppState, Alert } from 'react-native';
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from 'react';
-import { auth } from '../firebaseConfig';
 import { Link, Redirect } from 'expo-router';
 import { useRouter } from 'expo-router';
 import React from 'react';
+import { authClient } from '@/supabaseClient';
 
-
+AppState.addEventListener('change', (state) => {
+  if (state === 'active') {
+    authClient.startAutoRefresh()
+  } else {
+    authClient.stopAutoRefresh()
+  }
+})
 
 export default function TabOneScreen() {
 
@@ -17,47 +22,28 @@ export default function TabOneScreen() {
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
-  // setEmail('setordeti@actiondaydigital.page')
-  // setPassword('actionday')
 
-  // const auth = getAuth();
   const signIn = async () => {
     setLoading(true)
-    try {
-      const response = await signInWithEmailAndPassword(auth, email, password)
-      console.log(response)
-      router.replace("/(tabs)/home")
-    } catch (error: any) {
-      alert(error.message)
-      setLoading(false)
-    }
+    const { error } = await authClient.signInWithPassword({
+      email: email,
+      password: password,
+    })
+    // router.replace("/(tabs)/home")
+    Alert.alert("Logado!")
+    if (error) Alert.alert(error.message)
+    setLoading(false)
   }
+
 
   return (
     <>
       <KeyboardAvoidingView style={styles.container}>
-        {/* <View style={styles.containerLogo}>
-          <Animated.Image
-            style={{
-              
-            }}
-            source={require('../assets/images/logo.png')}
-          />
-        </View> */}
+
         <Image
           style={styles.logoImage}
           source={require('../assets/images/logo.png')}
         />
-
-        {/* <Text style={styles.textHeader}>
-        </Text> */}
-
-        {/* <Text style={styles.descriptionHeader}>
-          <Text></Text>
-          <Text></Text>
-
-        </Text> */}
-
 
         <TextInput
           value={email}
@@ -158,7 +144,4 @@ const styles = StyleSheet.create({
   },
 
 });
-function initializeApp(firebaseConfig: any) {
-  throw new Error('Function not implemented.');
-}
 
