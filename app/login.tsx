@@ -1,69 +1,76 @@
-
-
-import { ScrollViewStyleReset } from 'expo-router/html';
+import { KeyboardAvoidingView, Pressable, StyleSheet, TextInput, TouchableOpacity, Image, ActivityIndicator, AppState, Alert } from 'react-native';
+import EditScreenInfo from '@/components/EditScreenInfo';
+import { Text, View } from '@/components/Themed';
+import { useState } from 'react';
+import { Link, Redirect } from 'expo-router';
+import { useRouter } from 'expo-router';
 import React from 'react';
-import
-  {
-    KeyboardAvoidingView,
-    View,
-    Text,
-    Image,
-    TextInput,
-    TouchableOpacity,
-    Animated,
-    Keyboard
-  } from 'react-native';
-import { StyleSheet } from 'react-native';
+import { authClient } from '@/supabaseClient';
+
+AppState.addEventListener('change', (state) => {
+  if (state === 'active') {
+    authClient.startAutoRefresh()
+  } else {
+    authClient.stopAutoRefresh()
+  }
+})
+
+export default function TabOneScreen() {
+
+  const router = useRouter()
+
+  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const signIn = async () => {
+    setLoading(true)
+    const { error } = await authClient.signInWithPassword({
+      email: email,
+      password: password,
+    })
+    // router.replace("/(tabs)/home")
+    Alert.alert("Logado!")
+    if (error) Alert.alert(error.message)
+    setLoading(false)
+  }
 
 
-export default function Login() {
-  
   return (
     <>
       <KeyboardAvoidingView style={styles.container}>
-        {/* <View style={styles.containerLogo}>
-          <Animated.Image
-            style={{
-              
-            }}
-            source={require('../assets/images/logo.png')}
-          />
-        </View> */}
-        <Image source={require('../assets/images/logo.png')} style={styles.logoImage}/>
-         
-        {/* <Text style={styles.textHeader}>
-          Bem-Vindo!
-        </Text>
 
-        <Text style={styles.descriptionHeader}>
-          Preencha as informações abaixo para acessar sua conta.
-        </Text> */}
-
-
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          keyboardType="email-address"
-          textContentType="emailAddress"
-          autoCapitalize="none"
-          autoCorrect={false}
-          onChangeText={() => {}}
+        <Image
+          style={styles.logoImage}
+          source={require('../assets/images/logo.png')}
         />
 
         <TextInput
+          value={email}
+          style={styles.input}
+          placeholder="Email"
+          autoCapitalize="none"
+          onChangeText={(text) => setEmail(text)}
+        ></TextInput>
+
+        <TextInput
+          value={password}
           style={styles.input}
           placeholder="Senha"
           //keyboardType="visible-password"
-          textContentType="password"
           autoCapitalize="none"
-          autoCorrect={false}
           secureTextEntry={true}
-          onChangeText={() => {}}
-        />
+          onChangeText={(text) => setPassword(text)}
+        ></TextInput>
 
-        <TouchableOpacity style={styles.buttonSubmit}>
-          <Text style={styles.submitText} >Acessar</Text>
-        </TouchableOpacity>
+        {loading ?
+          <Pressable style={styles.buttonSubmit} onPress={signIn}>
+            <ActivityIndicator size="small" color="#0000ff" />
+          </Pressable>
+          :
+          <Pressable style={styles.buttonSubmit} onPress={signIn}>
+            <Text style={styles.submitText}> Acessar </Text>
+          </Pressable>}
       </KeyboardAvoidingView>
     </>
   );
@@ -78,7 +85,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#262450'
   },
 
-  logoImage:{
+  logoImage: {
     width: '60%',
     height: 70,
     resizeMode: 'contain',
@@ -92,11 +99,11 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold'
   },
-  
+
   descriptionHeader: {
     width: '90%',
     fontSize: 14,
-    color: '#7B78AA',
+    color: '#FFF',
     marginBottom: 26
   },
 
@@ -137,6 +144,4 @@ const styles = StyleSheet.create({
   },
 
 });
-
-
 
