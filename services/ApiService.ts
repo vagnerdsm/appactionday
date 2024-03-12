@@ -9,6 +9,7 @@ const useApiRequest = async () => {
             method,
             url
         });
+
         return response.data;
     } catch (error) {
         console.error('Erro ao fazer a solicitação:', error);

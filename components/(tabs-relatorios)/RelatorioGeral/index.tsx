@@ -1,30 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
-import useApiRequest from '@/services/ApiService';
 import { Card, ChartBar, MetaCard } from '../../../components'
-
-
+import userApiService from '@/services/useApiService';
 
 const FirstRoute = () => {
-    const [data, setData] = useState<any>(null);
-    const [isLoading, setIsLoading] = useState<any>("Loading...");
-
-    useEffect(() => {
-
-        const fetchData = async () => {
-            try {
-                const fetchedData = await useApiRequest();
-
-                setData(fetchedData);
-                setIsLoading(null);
-            } catch (error) {
-                console.error('Erro ao buscar dados:', error);
-                setIsLoading(null);
-            }
-        };
-
-        fetchData();
-    }, [])
+    const { data, isLoading } = userApiService()
 
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -38,77 +18,79 @@ const FirstRoute = () => {
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
 
-            {/* Vendas RD e Faturamento Total */}
-            <View style={styles.rowContainer}>
-                <Card
-                    icon="money"
-                    name="Vendas RD"
-                    value={isLoading ? isLoading : data?.vendas_rd}
-                    iconColor="#9327F0"
-                />
-                <Card
-                    icon="money"
-                    name="Faturamento Total"
-                    value={isLoading ? isLoading : formatter.format(data?.faturamento_total)}
-                    iconColor="#61DE70"
-                />
-            </View>
-
-            {/* Ticket Medio e Impressoes */}
-            <View style={styles.rowContainer}>
-                <Card
-                    icon="ticket"
-                    name="Ticket Médio"
-                    value={isLoading ? isLoading : formatter.format(data?.faturamento_total / data?.vendas_rd)}
-                    iconColor="#0062FF"
-                />
-
-                <Card
-                    icon="eye"
-                    name="Impressões"
-                    value={isLoading ? isLoading : formatador.format(data?.impressoes)}
-                    iconColor="#00e6fe"
-                />
-            </View>
-
-            {/* Meta e progresso */}
-            <View style={styles.rowContainer}>
-                {data?.meta !== 0 && (
-                    <MetaCard
-                        vendas={isLoading ? isLoading : data?.vendas_rd}
-                        meta={isLoading ? isLoading : data?.meta}
-                        porcentagem={isLoading ? isLoading : `${Number(((data?.vendas_rd / data?.meta))).toFixed(2)}%`}
-
+            {isLoading ? (
+                <Text>Loading...</Text>
+            ) :
+                <View style={styles.rowContainer}>
+                    <Card
+                        icon="money"
+                        name="Vendas RD"
+                        value={data?.vendas_rd}
+                        iconColor="#9327F0"
                     />
-                )}
-            </View>
+                    <Card
+                        icon="money"
+                        name="Faturamento Total"
+                        value={formatter.format(data?.faturamento_total)}
+                        iconColor="#61DE70"
+                    />
+                </View>
+            }
 
-            {/* Grafico Ticket Medio X Mes */}
-            <View style={styles.columnContainer}>
+            {isLoading ? (
+                <Text>Loading...</Text>
+            ) :
+                <View style={styles.rowContainer}>
+                    <Card
+                        icon="ticket"
+                        name="Ticket Médio"
+                        value={formatter.format(data?.faturamento_total / data?.vendas_rd)}
+                        iconColor="#0062FF"
+                    />
 
-                {isLoading ? (
-                    <Text>Loading...</Text>
-                ) :
+                    <Card
+                        icon="eye"
+                        name="Impressões"
+                        value={formatador.format(data?.impressoes)}
+                        iconColor="#00e6fe"
+                    />
+                </View>
+            }
+
+            {isLoading ? (
+                <Text>Loading...</Text>
+            ) :
+                <View style={styles.rowContainer}>
+                    {data?.meta !== 0 && (
+                        <MetaCard
+                            vendas={isLoading ? isLoading : data?.vendas_rd}
+                            meta={isLoading ? isLoading : data?.meta}
+                            porcentagem={isLoading ? isLoading : `${Number(((data?.vendas_rd / data?.meta))).toFixed(2)}%`}
+
+                        />
+                    )}
+                </View>
+            }
+
+            {isLoading ? (
+                <Text>Loading...</Text>
+            ) :
+                <View style={styles.columnContainer}>
+
                     <ChartBar
                         title={'Grafico Ticket Medio X Mes'}
                         label={data?.ticket_por_mes.map((item: { DATE: string; }) => item.DATE)}
                         data={data?.ticket_por_mes.map((item: { Faturamento: number; }) => item.Faturamento)}
                     />
-                }
 
-                {/* Gráfico Vendas por Mês */}
-
-                {isLoading ? (
-                    <Text>Loading...</Text>
-                ) :
                     <ChartBar
                         title={'Vendas Por Mês'}
                         label={data?.vendas_por_mes.map((item: { DATE: String; }) => item.DATE)}
                         data={data?.vendas_por_mes.map((item: { Vendas: Number; }) => item.Vendas)}
                     />
-                }
 
-            </View>
+                </View>
+            }
 
         </ScrollView>
     );

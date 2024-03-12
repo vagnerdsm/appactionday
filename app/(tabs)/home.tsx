@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, View, } from 'react-native'
-import { Stack } from 'expo-router';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
 import { FirstRoute, SecondRoute, ThirdRoute } from '../../components'
 

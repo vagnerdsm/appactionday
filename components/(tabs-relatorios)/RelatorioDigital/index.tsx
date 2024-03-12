@@ -1,27 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
-import useApiRequest from '@/services/ApiService';
 import { Card, ChartBar, ChartPie } from '../../../components'
+import userApiService from '@/services/useApiService';
 
 const SecondRoute = () => {
-    const [data, setData] = useState<any>(null)
-    const [isLoading, setIsLoading] = useState<any>("Loading...")
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const fetchedData = await useApiRequest();
-
-                setData(fetchedData);
-                setIsLoading(null);
-            } catch (error) {
-                console.error('Erro ao buscar dados:', error);
-                setIsLoading(null);
-            }
-        };
-
-        fetchData();
-    }, [])
+    const { data, isLoading } = userApiService()
 
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
-import useApiRequest from '@/services/ApiService';
 import { Card, ChartPie } from '../../../components'
+import userApiService from '@/services/useApiService';
 
 const generateColor = () => {
     const letters = '0123456789ABCDEF';
@@ -15,25 +15,11 @@ const generateColor = () => {
 }
 
 const ThirdRoute = () => {
-    const [data, setData] = useState<any>(null)
-    const [isLoading, setIsLoading] = useState<any>("Loading...")
+    const { data, isLoading } = userApiService()
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const fetchedData = await useApiRequest();
-
-                setData(fetchedData);
-                setIsLoading(null);
-            } catch (error) {
-                console.error('Erro ao buscar dados:', error);
-                setIsLoading(null);
-            }
-        };
-
-        fetchData();
-    }, [])
-
+    let formatador = new Intl.NumberFormat('pt-BR',
+        { minimumFractionDigits: 0, maximumFractionDigits: 2 }
+    );
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
 
