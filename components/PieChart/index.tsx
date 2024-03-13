@@ -15,7 +15,6 @@ const chartConfig = {
 };
 
 const ChartPie = (props: any) => {
-
     const { data, title } = props
 
     const screenWidth = Dimensions.get('window').width - 48;

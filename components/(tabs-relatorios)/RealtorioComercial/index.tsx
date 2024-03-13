@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import { Card, ChartPie } from '../../../components'
+import ChartLine from '@/components/LineChart';
 import userApiService from '@/services/useApiService';
 
 const generateColor = () => {
@@ -17,9 +18,14 @@ const generateColor = () => {
 const ThirdRoute = () => {
     const { data, isLoading } = userApiService()
 
-    let formatador = new Intl.NumberFormat('pt-BR',
-        { minimumFractionDigits: 0, maximumFractionDigits: 2 }
-    );
+    if (isLoading) {
+        return (
+            <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+                <Text>Loading...</Text>
+            </ScrollView>
+        );
+    };
+
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
 
@@ -28,13 +34,13 @@ const ThirdRoute = () => {
                 <Card
                     icon="check-square-o"
                     name="Oportunidades Ganhas"
-                    value={isLoading ? isLoading : data?.oportuniadades_ganhas}
+                    value={data?.oportuniadades_ganhas}
                     iconColor="#61DE70"
                 />
                 <Card
                     icon="window-close-o"
                     name="Oportunidades Perdidas"
-                    value={isLoading ? isLoading : data?.oportunidades_perdidas}
+                    value={data?.oportunidades_perdidas}
                     iconColor="#851b20"
                 />
             </View>
@@ -44,72 +50,50 @@ const ThirdRoute = () => {
                 <Card
                     icon="rotate-right"
                     name="Oportunidades em Andamento"
-                    value={isLoading ? isLoading : data?.oportunidades_em_andamento}
+                    value={data?.oportunidades_em_andamento}
                     iconColor="#665d5d"
                 />
             </View>
 
             <View style={styles.columnContainer}>
+                <ChartPie
+                    title={"Conversao por Vendedor"}
+                    data={data?.conversao_vendedor_calculo.map((item: { conversao: number; vendedor: string }) => ({
+                        name: item.vendedor,
+                        population: item.conversao,
+                        color: generateColor(),
+                    }))}
+                />
 
-                {isLoading ? (
-                    <Text>Loading...</Text>
-                ) :
-                    <ChartPie
-                        title={"Oportunidades por Vendedor"}
-                        data={data?.venda_por_vendedor.map((item: { Oportunidades: number; Vendedor: string }) => ({
-                            name: item.Vendedor,
-                            population: item.Oportunidades,
-                            color: generateColor(),
-                        }))}
-                    />
-                }
+                <ChartPie
+                    title={"Faturamento por Vendedor"}
+                    data={data?.faturamento_por_vendedor.map((item: { Faturamento: number; Vendedor: string }) => ({
+                        name: item.Vendedor,
+                        population: item.Faturamento,
+                        color: generateColor(),
+                    }))}
+                />
 
-                {isLoading ? (
-                    <Text>Loading...</Text>
-                ) :
-                    <ChartPie
-                        title={"Conversao por Vendedor"}
-                        data={data?.conversao_vendedor_calculo.map((item: { conversao: number; vendedor: string }) => ({
-                            name: item.vendedor,
-                            population: item.conversao,
-                            color: generateColor(),
-                        }))}
-                    />
-                }
+                <ChartPie
+                    title={"Oportunidades por Vendedor"}
+                    data={data?.oportunidades_por_vendedor.map((item: { Oportunidades: number; Vendedor: string }) => ({
+                        name: item.Vendedor,
+                        population: item.Oportunidades,
+                        color: generateColor(),
+                    }))}
+                />
 
-                {isLoading ? (
-                    <Text>Loading...</Text>
-                ) :
-                    <ChartPie
-                        title={"Faturamento por Vendedor"}
-                        data={data?.faturamento_por_vendedor.map((item: { Faturamento: number; Vendedor: string }) => ({
-                            name: item.Vendedor,
-                            population: item.Faturamento,
-                            color: generateColor(),
-                        }))}
-                    />
-                }
-
-                {isLoading ? (
-                    <Text>Loading...</Text>
-                ) :
-                    <ChartPie
-                        title={"Oportunidades por Vendedor"}
-                        data={data?.oportunidades_por_vendedor.map((item: { Oportunidades: number; Vendedor: string }) => ({
-                            name: item.Vendedor,
-                            population: item.Oportunidades,
-                            color: generateColor(),
-                        }))}
-                    />
-                }
+                <ChartLine
+                    label={data?.oportunidades_por_mes.map((item: any) => item.Date)}
+                    data={data?.oportunidades_por_mes.map((item: any) => item.Oportunidades)}
+                />
 
             </View>
-
         </ScrollView >
     )
 };
-const styles = StyleSheet.create({
 
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#fff",
@@ -138,7 +122,6 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         borderRadius: 16,
     },
-
 });
 
 export default ThirdRoute 

@@ -2,7 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import { Card, ChartBar, ChartPie } from '../../../components'
 import userApiService from '@/services/useApiService';
+const generateColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
 
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+
+    return color;
+}
 const SecondRoute = () => {
     const { data, isLoading } = userApiService()
 
@@ -15,6 +24,14 @@ const SecondRoute = () => {
         { minimumFractionDigits: 0, maximumFractionDigits: 2 }
     );
 
+    if (isLoading) {
+        return (
+            <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+                <Text>Loading...</Text>
+            </ScrollView>
+        );
+    }
+
     return (
 
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -23,13 +40,13 @@ const SecondRoute = () => {
                 <Card
                     icon="desktop"
                     name="Leads"
-                    value={formatador.format(isLoading ? isLoading : data?.lead_face + data?.lead_google)}
+                    value={formatador.format(data?.lead_face + data?.lead_google)}
                     iconColor="#9327F0"
                 />
                 <Card
                     icon="money"
                     name="CPL"
-                    value={isLoading ? isLoading : formatter.format((data?.cpl_face + data?.cpl_google) / (data?.lead_google + data?.lead_face))}
+                    value={formatter.format((data?.cpl_face + data?.cpl_google) / (data?.lead_google + data?.lead_face))}
                     iconColor="#61DE70"
                 />
             </View>
@@ -38,7 +55,7 @@ const SecondRoute = () => {
                 <Card
                     icon="eye"
                     name="impressoes"
-                    value={isLoading ? isLoading : formatador.format(data?.impressoes)}
+                    value={formatador.format(data?.impressoes)}
                     iconColor="#9327F0"
                 />
                 <Card
@@ -51,62 +68,46 @@ const SecondRoute = () => {
 
             <View style={styles.columnContainer}>
 
-                {isLoading ? (
-                    <Text>Loading...</Text>
-                ) :
-                    <ChartPie
-                        title={`Custo por Matrícula x Ticket Médio`}
-                        data={[
-                            {
-                                name: 'Custo por Matrícula',
-                                population: Number(((data?.custo_vendas / data?.vendas_rd) + (data?.valor_gasto_google / data?.vendas_rd)).toFixed(2)),
-                                color: '#54F2D4'
-                            },
-                            {
-                                name: 'Ticket Medio',
-                                population: Number((data?.ticket_medio / data?.vendas_rd).toFixed(2)),
-                                color: '#1AAB40'
-                            },
-                        ]}
-                    />
-                }
 
-                {isLoading ? (
-                    <Text>Loading...</Text>
-                ) :
-                    <ChartPie
-                        title={"Facebook por objetivo"}
-                        data={[
-                            {
-                                name: data?.facebook_objetivo.map((item: { OBJETIVO: string; }) => item.OBJETIVO),
-                                population: data?.facebook_objetivo.map((item: { conversoes: number; }) => item.conversoes),
-                                color: '#54F2D4'
-                            }
-                        ]}
-                    />
+                <ChartPie
+                    title={`Custo por Matrícula x Ticket Médio`}
+                    data={[
+                        {
+                            name: 'Custo por Matrícula',
+                            population: Number(((data?.custo_vendas / data?.vendas_rd) + (data?.valor_gasto_google / data?.vendas_rd)).toFixed(2)),
+                            color: '#54F2D4'
+                        },
+                        {
+                            name: 'Ticket Medio',
+                            population: Number((data?.ticket_medio / data?.vendas_rd).toFixed(2)),
+                            color: '#1AAB40'
+                        },
+                    ]}
+                />
 
-                }
 
-                {
-                    isLoading ? (
-                        <Text> Loading...</Text>
-                    ) :
-                        <ChartBar
-                            title={'Lead Por Gênero'}
-                            label={data?.lead_genero.map((lead: { gender: string; }) => lead.gender)}
-                            data={data?.lead_genero.map((lead: { conversoes: number; }) => lead.conversoes)}
-                        />
-                }
 
-                {isLoading ? (
-                    <Text>Loading...</Text>
-                ) :
-                    <ChartBar
-                        title={'Lead Por Idade'}
-                        label={data?.lead_idade.map((lead: { age: string; }) => lead.age)}
-                        data={data?.lead_idade.map((lead: { conversoes: number; }) => lead.conversoes)}
-                    />
-                }
+                <ChartPie
+                    title={"Facebook por objetivo"}
+                    data={data?.facebook_objetivo.map((item: { conversoes: number, OBJETIVO: string }) => ({
+                        name: item.OBJETIVO,
+                        population: item.conversoes,
+                        color: generateColor(),
+                    }))}
+                />
+
+                <ChartBar
+                    title={'Lead Por Gênero'}
+                    label={data?.lead_genero.map((lead: { gender: string; }) => lead.gender)}
+                    data={data?.lead_genero.map((lead: { conversoes: number; }) => lead.conversoes)}
+                />
+
+
+                <ChartBar
+                    title={'Lead Por Idade'}
+                    label={data?.lead_idade.map((lead: { age: string; }) => lead.age)}
+                    data={data?.lead_idade.map((lead: { conversoes: number; }) => lead.conversoes)}
+                />
 
             </View>
 
@@ -128,13 +129,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         gap: 12,
         paddingTop: 16,
-        paddingBottom: 10
     },
 
     columnContainer: {
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 12
+        gap: 12,
+        paddingTop: 16,
     },
 
     tabBar: {
