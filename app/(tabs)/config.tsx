@@ -1,35 +1,42 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Text, View } from '@/components/Themed';
-import { Button, Image, Pressable, Switch, TouchableOpacity, useColorScheme } from 'react-native';
+import { Alert, Button, Image, Pressable, Switch, TouchableOpacity, useColorScheme } from 'react-native';
 import { Link, Redirect, Stack, router } from 'expo-router';
 import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
 import { useTheme } from '@react-navigation/native';
-import { userInfosContext } from '@/context/userContext';
+import { authClient } from '@/supabaseClient';
+import { getUserData } from '@/services/getUserData';
+import { Session } from '@supabase/supabase-js';
 
 
 export default function TabConfig() {
   // const username = auth.currentUser?.displayName
-  // const useremail = auth.currentUser?.email
+  // const useremail = auth.currentUser?.emai
+  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState<any>(null)
+
+  useEffect(( ) => {
+    authClient.getUser().then(({ data: { user } }) => {
+      if (user) {
+        setUser(user);
+      } else {
+        Alert.alert("Error accessing user");
+      }
+    })
+  }, [])
 
   const [userInfo, setUserInfo] = useState<any | undefined>(null);
-  // const useruid = auth.currentUser?.uid.toString()
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   // const toggleSwitch = () => useTheme();
 
   const signOut = async () => {
-    // try {
-    //   const response = await auth.signOut();
-    //   console.log(response)
-    //   // setUserInfo("")
-    //   router.replace("/login")
-    // } catch (error) {
-    //   console.log(error)
-    // }
+    const signout = authClient.signOut();
+    router.replace('/login')
   };
 
   const fetchData = async () => {
@@ -51,7 +58,7 @@ export default function TabConfig() {
   }, []);
 
   const { colors } = useTheme();
-  
+
   return (
     <SafeAreaView style={[styles.background]}>
       <Stack.Screen options={{}} />
@@ -82,6 +89,14 @@ export default function TabConfig() {
               </View>
             </TouchableOpacity>
           </Link>
+
+          <TouchableOpacity onPress={() => (console.log(user))}>
+            <View style={[styles.buttonMenu, styles.shadowProp, styles.elevation]}>
+              <View style={styles.buttonContent}>
+                <Text style={styles.buttonText}> Buscar info User </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
 
           {/* <Link href="/modal" asChild>
             <TouchableOpacity >
