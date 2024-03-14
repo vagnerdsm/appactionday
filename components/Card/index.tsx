@@ -3,17 +3,18 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { FontAwesome } from "@expo/vector-icons";
 
 const Card = (props: any) => {
+    const { icon, iconColor, name, value } = props;
 
     return (
         <View style={styles.cardMetric}>
 
-            <FontAwesome name={props.icon} size={24} color={props.iconColor} />
+            <FontAwesome name={icon} size={24} color={iconColor} />
 
             <View style={styles.textContainer}>
-                <Text style={styles.text}>{props.name}</Text>
-                <Text style={[styles.text, { fontSize: 18, fontWeight: 'bold' }]}>{props.value}</Text>
+                <Text style={styles.text}>{name}</Text>
+                <Text style={[styles.text, { fontSize: 18, fontWeight: 'bold' }]}>{value}</Text>
             </View>
-        
+
         </View>
     );
 }
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
         borderColor: '#ccc',
         paddingLeft: 10,
     },
+
     textContainer: {
         justifyContent: 'center',
         gap: 2,
@@ -37,6 +39,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         borderRadius: 8,
     },
+
     text: {
         color: '#000',
         fontSize: 12,

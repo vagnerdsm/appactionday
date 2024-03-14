@@ -7,11 +7,9 @@ const chartConfig = {
     backgroundGradientFromOpacity: 0,
     backgroundGradientTo: "#174a53",
     backgroundGradientToOpacity: 0.5,
-
     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
     strokeWidth: 2,
     decimalPlaces: 0,
-
 };
 
 const ChartPie = (props: any) => {

@@ -1,9 +1,27 @@
-import React from 'react';
-import { Link, Stack } from 'expo-router';
+import { Link, Stack, router } from 'expo-router';
 import { StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
 import { Text, View } from '@/components/Themed';
+import { authClient } from '@/supabaseClient';
 
 export default function NotFoundScreen() {
+
+  useEffect(() => {
+    authClient.getSession().then(({ data: { session } }) => {
+      if (session) {
+        router.replace('/(tabs)/home')
+      }
+    });
+
+    authClient.onAuthStateChange((_event, session) => {
+      if (session) {
+        router.replace('/(tabs)/home')
+      } else {
+        router.replace('/login')
+      }
+    })
+  }, [])
+
   return (
     <>
       <Stack.Screen options={{ title: 'Oops!' }} />

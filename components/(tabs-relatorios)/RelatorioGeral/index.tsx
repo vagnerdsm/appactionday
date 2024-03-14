@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import { Card, ChartBar, MetaCard } from '../../../components'
 import userApiService from '@/services/useApiService';
-import { LineChart } from 'react-native-chart-kit';
 
 const FirstRoute = () => {
     const { data, isLoading } = userApiService()
@@ -99,7 +98,7 @@ const styles = StyleSheet.create({
     columnContainer: {
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 12,
+        gap: 6,
         paddingTop: 16,
     },
     graphStyle: {

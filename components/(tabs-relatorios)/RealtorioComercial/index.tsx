@@ -87,8 +87,8 @@ const ThirdRoute = () => {
                     label={data?.oportunidades_por_mes.map((item: any) => item.Date)}
                     data={data?.oportunidades_por_mes.map((item: any) => item.Oportunidades)}
                 />
-
             </View>
+
         </ScrollView >
     )
 };
@@ -109,9 +109,10 @@ const styles = StyleSheet.create({
     columnContainer: {
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 12,
+        gap: 6,
         paddingTop: 16,
     },
+
 
     tabBar: {
         backgroundColor: '#fff',

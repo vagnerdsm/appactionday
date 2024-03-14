@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     columnContainer: {
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 12,
+        gap: 6,
         paddingTop: 16,
     },
 

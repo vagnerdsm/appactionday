@@ -1,14 +1,19 @@
-import { KeyboardAvoidingView, Pressable, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
+import { KeyboardAvoidingView, Pressable, StyleSheet, TextInput, TouchableOpacity, Image, ActivityIndicator, AppState, Alert } from 'react-native';
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from 'react';
-import { auth } from '../firebaseConfig';
 import { Link, Redirect } from 'expo-router';
 import { useRouter } from 'expo-router';
 import React from 'react';
+import { authClient } from '@/supabaseClient';
 
-
+AppState.addEventListener('change', (state) => {
+  if (state === 'active') {
+    authClient.startAutoRefresh()
+  } else {
+    authClient.stopAutoRefresh()
+  }
+})
 
 export default function TabOneScreen() {
 
@@ -16,45 +21,29 @@ export default function TabOneScreen() {
 
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
-  // setEmail('setordeti@actiondaydigital.page')
-  // setPassword('actionday')
+  const [loading, setLoading] = useState(false)
 
-  // const auth = getAuth();
   const signIn = async () => {
-    try {
-      const response = await signInWithEmailAndPassword(auth, email, password)
-      console.log(response)
-      router.replace("/(tabs)/home")
-    } catch (error: any) {
-      alert(error.message)
-    }
+    setLoading(true)
+    const { error } = await authClient.signInWithPassword({
+      email: email,
+      password: password,
+    })
+    Alert.alert("Logado!")
+    if (error) Alert.alert(error.message)
+    setLoading(false)
+    router.replace("/(tabs)/config")
   }
+
 
   return (
     <>
       <KeyboardAvoidingView style={styles.container}>
-        {/* <View style={styles.containerLogo}>
-          <Animated.Image
-            style={{
-              
-            }}
-            source={require('../assets/images/logo.png')}
-          />
-        </View> */}
+
         <Image
-              style={styles.logoImage}
-              source={require('../assets/images/logo.png')}
-            />
-
-        {/* <Text style={styles.textHeader}>
-        </Text> */}
-
-        {/* <Text style={styles.descriptionHeader}>
-          <Text></Text>
-          <Text></Text>
-
-        </Text> */}
-
+          style={styles.logoImage}
+          source={require('../assets/images/logo.png')}
+        />
 
         <TextInput
           value={email}
@@ -74,9 +63,14 @@ export default function TabOneScreen() {
           onChangeText={(text) => setPassword(text)}
         ></TextInput>
 
-        <Pressable style={styles.buttonSubmit} onPress={signIn}>
-          <Text style={styles.submitText} >Acessar</Text>
-        </Pressable>
+        {loading ?
+          <Pressable style={styles.buttonSubmit} onPress={signIn}>
+            <ActivityIndicator size="small" color="#0000ff" />
+          </Pressable>
+          :
+          <Pressable style={styles.buttonSubmit} onPress={signIn}>
+            <Text style={styles.submitText}> Acessar </Text>
+          </Pressable>}
       </KeyboardAvoidingView>
     </>
   );
@@ -150,7 +144,4 @@ const styles = StyleSheet.create({
   },
 
 });
-function initializeApp(firebaseConfig: any) {
-  throw new Error('Function not implemented.');
-}
 
