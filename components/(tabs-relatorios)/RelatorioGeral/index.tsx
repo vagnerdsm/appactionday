@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import { Card, ChartBar, MetaCard } from '../../../components'
 import userApiService from '@/services/useApiService';

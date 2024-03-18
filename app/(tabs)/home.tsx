@@ -40,10 +40,8 @@ export default function TabOneScreen() {
 }
 
 const styles = StyleSheet.create({
-
   tabBar: {
     backgroundColor: '#fff',
     borderColor: 'blue'
   },
-
 });

@@ -32,10 +32,10 @@ export default function TabOneScreen() {
     Alert.alert("Logado!")
     if (error) Alert.alert(error.message)
     setLoading(false)
-    router.replace("/(tabs)/config")
+    router.replace("/(tabs)/home")
   }
 
-
+  
   return (
     <>
       <KeyboardAvoidingView style={styles.container}>
