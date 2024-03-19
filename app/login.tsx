@@ -6,6 +6,7 @@ import { Link, Redirect } from 'expo-router';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { authClient } from '@/supabaseClient';
+import { getUserData } from '@/services/getUserData';
 
 AppState.addEventListener('change', (state) => {
   if (state === 'active') {
@@ -25,17 +26,24 @@ export default function TabOneScreen() {
 
   const signIn = async () => {
     setLoading(true)
+
     const { error } = await authClient.signInWithPassword({
       email: email,
       password: password,
     })
-    Alert.alert("Logado!")
-    if (error) Alert.alert(error.message)
-    setLoading(false)
-    router.replace("/(tabs)/home")
+
+    if (error) {
+      Alert.alert(error.message)
+      setLoading(false)
+      router.replace("/login");
+    }
+    else {
+      Alert.alert("Logado!")
+      setLoading(true)
+      router.replace("/(tabs)/home")
+    }
   }
 
-  
   return (
     <>
       <KeyboardAvoidingView style={styles.container}>
@@ -51,7 +59,7 @@ export default function TabOneScreen() {
           placeholder="Email"
           autoCapitalize="none"
           onChangeText={(text) => setEmail(text)}
-        ></TextInput>
+        />
 
         <TextInput
           value={password}
@@ -61,7 +69,7 @@ export default function TabOneScreen() {
           autoCapitalize="none"
           secureTextEntry={true}
           onChangeText={(text) => setPassword(text)}
-        ></TextInput>
+        />
 
         {loading ?
           <Pressable style={styles.buttonSubmit} onPress={signIn}>

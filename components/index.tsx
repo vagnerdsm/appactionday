@@ -1,9 +1,28 @@
+import Card from "./Card";
 import ChartBar from "./BarChart";
 import ChartPie from "./PieChart";
-import Card from "./Card";
 import MetaCard from "./MetaCard";
+import ChartLine from "./LineChart";
+
 import FirstRoute from "./(tabs-relatorios)/RelatorioGeral";
 import SecondRoute from "./(tabs-relatorios)/RelatorioDigital";
 import ThirdRoute from "./(tabs-relatorios)/RealtorioComercial";
 
-export { ChartBar, ChartPie, Card, MetaCard, FirstRoute, SecondRoute, ThirdRoute }
+import useApiRequest from "@/services/apiService";
+import userApiService from "@/services/useApiService";
+
+export {
+    Card,
+
+    ChartBar,
+    ChartPie,
+    MetaCard,
+    ChartLine,
+
+    FirstRoute,
+    SecondRoute,
+    ThirdRoute,
+    
+    useApiRequest,
+    userApiService
+}

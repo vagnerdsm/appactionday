@@ -1,8 +1,7 @@
 import React from 'react'
-import { StyleSheet, View, Text, ScrollView } from 'react-native'
-import { Card, ChartBar, MetaCard } from '../../../components'
-import userApiService from '@/services/useApiService';
-
+import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
+import { Card, ChartBar, MetaCard, userApiService } from '../../../components'
+import { getUserData } from '@/services/getUserData';
 const FirstRoute = () => {
     const { data, isLoading } = userApiService()
 
@@ -18,7 +17,7 @@ const FirstRoute = () => {
     if (isLoading) {
         return (
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-                <Text>Loading...</Text>
+                <ActivityIndicator />
             </ScrollView>
         );
     }
@@ -27,7 +26,6 @@ const FirstRoute = () => {
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
 
             <View style={styles.rowContainer}>
-
                 <Card
                     icon="money"
                     name="Vendas RD"

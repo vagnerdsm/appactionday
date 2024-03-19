@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, ScrollView } from 'react-native'
-import { Card, ChartBar, ChartPie } from '../../../components'
-import userApiService from '@/services/useApiService';
+import React from 'react'
+import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
+import { Card, ChartBar, ChartPie, userApiService } from '../../../components'
+
 const generateColor = () => {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -12,6 +12,7 @@ const generateColor = () => {
 
     return color;
 }
+
 const SecondRoute = () => {
     const { data, isLoading } = userApiService()
 
@@ -27,7 +28,7 @@ const SecondRoute = () => {
     if (isLoading) {
         return (
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-                <Text>Loading...</Text>
+                <ActivityIndicator />
             </ScrollView>
         );
     }

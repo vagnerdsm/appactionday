@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, ScrollView } from 'react-native'
-import { Card, ChartPie } from '../../../components'
-import ChartLine from '@/components/LineChart';
-import userApiService from '@/services/useApiService';
+import React from 'react'
+import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
+import { Card, ChartPie, ChartLine, userApiService } from '../../../components'
 
 const generateColor = () => {
     const letters = '0123456789ABCDEF';
@@ -21,7 +19,7 @@ const ThirdRoute = () => {
     if (isLoading) {
         return (
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-                <Text>Loading...</Text>
+                <ActivityIndicator />
             </ScrollView>
         );
     };
@@ -125,4 +123,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ThirdRoute 
+export default ThirdRoute
