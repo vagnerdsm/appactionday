@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
 import { Card, ChartBar, MetaCard, userApiService } from '../../../components'
-import { getUserData } from '@/services/getUserData';
+
 const FirstRoute = () => {
     const { data, isLoading } = userApiService()
 

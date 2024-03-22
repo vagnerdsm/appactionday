@@ -19,14 +19,16 @@ const ChartLine = (props: any) => {
     const { data, label } = props
 
     const dataG = {
+        
         labels: label,
         datasets: [
             {
                 data: data,
             }
         ],
-        legend: ["Rainy Days"]
+        legend: ["Oportunidades por mês"]
     }
+
     return (
         <View style={styles.chartContainer}>
             <LineChart

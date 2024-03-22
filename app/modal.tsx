@@ -4,7 +4,6 @@ import { Text, View } from '@/components/Themed';
 import CalendarDatePicker from '@/components/CalendarDatePicker';
 
 export default function ModalScreen() {
-  const [selected, setSelected] = useState('');
 
   return (
     <View style={styles.container}>
