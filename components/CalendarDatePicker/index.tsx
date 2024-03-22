@@ -1,16 +1,18 @@
-import React, { useState, } from "react";
-import { Button, Pressable, Text } from "react-native";
+import React, { useState } from "react";
+import { Button, Text } from "react-native";
 import { Calendar } from "react-native-calendars";
 import { useApiRequest } from "..";
 
 const CalendarDatePicker = () => {
     const atualDate: any = new Date()
+
     const [selected, setSelected] = useState({ startDate: '', endDate: '' });
     const [initialDaySelected, setInitialDaySelected] = useState(false)
 
     const handleDaySelection = (day: any) => {
         if (!initialDaySelected) {
             setSelected({ ...selected, startDate: day.dateString })
+
             setInitialDaySelected(true)
         } else {
             setSelected({ ...selected, endDate: day.dateString })
@@ -33,6 +35,7 @@ const CalendarDatePicker = () => {
                 maxDate={atualDate}
                 onDayPress={handleDaySelection}
                 markedDates={{
+
                     [selected.startDate]: {
                         selected: true,
                         marked: true,
@@ -44,6 +47,7 @@ const CalendarDatePicker = () => {
                         marked: true,
                         selectedColor: 'purple'
                     }
+
                 }}
             />
 
