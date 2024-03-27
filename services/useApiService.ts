@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import useApiRequest from "./apiService";
+import apiRequest from "./apiService";
 
 const userApiService = () => {
     const [data, setData] = useState<any>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const fetchedData = await useApiRequest();
+                const fetchedData = await apiRequest('');
 
                 setData(fetchedData);
             } catch (err) {

@@ -31,6 +31,7 @@ const ChartPie = (props: any) => {
                 hasLegend={false}
                 center={[75, 7]}
             />
+
             <View style={styles.legendContainer}>
                 {data && Array.isArray(data) && data.map((item, index) => (
                     <View key={index} style={styles.legendItem}>
@@ -48,6 +49,7 @@ const ChartPie = (props: any) => {
                     </View>
                 ))}
             </View>
+
             <Text style={styles.chartTitle}>{title}</Text>
         </View>
     );
