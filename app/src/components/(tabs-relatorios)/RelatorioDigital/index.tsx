@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
-import { Card, ChartBar, ChartPie, userApiService } from '../../../components'
+import { Card, ChartBar, ChartPie, userApiService } from '../..'
 
 const generateColor = () => {
     const letters = '0123456789ABCDEF';

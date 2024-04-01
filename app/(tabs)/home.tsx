@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, } from 'react-native'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
-import { FirstRoute, SecondRoute, ThirdRoute } from '../../components'
+import { FirstRoute, SecondRoute, ThirdRoute } from '../src/components'
 
 const renderScene = SceneMap({
   first: FirstRoute,

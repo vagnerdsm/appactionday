@@ -8,8 +8,8 @@ import FirstRoute from "./(tabs-relatorios)/RelatorioGeral";
 import SecondRoute from "./(tabs-relatorios)/RelatorioDigital";
 import ThirdRoute from "./(tabs-relatorios)/RealtorioComercial";
 
-import useApiRequest from "@/services/apiService";
-import userApiService from "@/services/useApiService";
+import useApiRequest from "@/app/src/services/apiService";
+import userApiService from "@/app/src/services/useApiService";
 
 export {
     Card,

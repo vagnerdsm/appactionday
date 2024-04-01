@@ -1,7 +1,7 @@
 import { Platform, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import { Text, View } from '@/components/Themed';
-import CalendarDatePicker from '@/components/CalendarDatePicker';
+import CalendarDatePicker from '@/app/src/components/CalendarDatePicker';
 
 export default function ModalScreen() {
 

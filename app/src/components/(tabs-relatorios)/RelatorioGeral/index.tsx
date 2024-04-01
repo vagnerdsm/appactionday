@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
-import { Card, ChartBar, MetaCard, userApiService } from '../../../components'
+import { Card, ChartBar, MetaCard, userApiService } from '../..'
 
 const FirstRoute = () => {
     const { data, isLoading } = userApiService()

@@ -117,7 +117,7 @@ export default function TabLayout() {
         options={{
           title: 'Config',
           headerShown: false,
-          
+
 
           tabBarIcon: ({ color }) => <TabBarIcon name="cog" color={color} />,
 
@@ -144,7 +144,7 @@ export default function TabLayout() {
           headerStyle: {
             backgroundColor: "#fff"
           },
-          
+
         }}
       />
     </Tabs>

@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
 import { useTheme } from '@react-navigation/native';
 import { authClient } from '@/supabaseClient';
-import { getUserData } from '@/services/getUserData';
+import { getUserData } from '@/app/src/services/getUserData';
 import { Session } from '@supabase/supabase-js';
 
 

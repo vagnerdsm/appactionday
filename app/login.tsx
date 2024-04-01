@@ -6,7 +6,7 @@ import { Link, Redirect } from 'expo-router';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { authClient } from '@/supabaseClient';
-import { getUserData } from '@/services/getUserData';
+import { getUserData } from '@/app/src/services/getUserData';
 
 AppState.addEventListener('change', (state) => {
   if (state === 'active') {
