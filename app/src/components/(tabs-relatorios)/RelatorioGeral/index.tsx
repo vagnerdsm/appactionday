@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
 import { Card, ChartBar, MetaCard, userApiService } from '../..'
 
 const FirstRoute = () => {
-    const { data, isLoading } = userApiService()
+    const { data: apiData, isLoading } = userApiService();
+    const [data, setData] = useState<any>(null);
+
+    useEffect(() => {
+
+        setData(apiData);
+
+    }, [isLoading, apiData]);
 
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
