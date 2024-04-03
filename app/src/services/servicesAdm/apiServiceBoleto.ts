@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiRequestBoleto = async () => {
-    const url = `https://appaction.vercel.app/api/boletos?cliente=URI SANTO ANGELO`;
+    const url = `https://appaction.vercel.app/api/boletos?cliente=FAEX`;
 
     try {
         const response = await axios.get(url);

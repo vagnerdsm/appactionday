@@ -5,19 +5,23 @@ import userApiServiceBoleto from '../src/services/servicesAdm/useApiServiceBolet
 export default function TabOneScreen() {
   const { data, isLoading } = userApiServiceBoleto()
 
-  console.log(data)
+  const DATA = data.map((item: { ID_ACTION: any; SERVICO: any; VALOR: any }) => ({ id: item.ID_ACTION, title: item.SERVICO }))
+
+  type ItemProps = { title: string }
+
+  const Item = ({ title }: ItemProps) => (
+    <View style={styles.item}>
+      <Text>{title}</Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
 
       <FlatList
-        data={[
-          { key: data[0].SERVICO },
-          { key: data[0].VENCIMENTO.value },            
-          { key: data[0].VALOR },
-          { key: data[0].LINK },
-        ]}
-
-        renderItem={({ item }) => <Text>{item.key}</Text>}
+        data={DATA}
+        renderItem={({ item }) => <Item title={item.title} />}
+        keyExtractor={(item) => item.id}
       />
 
     </View>
@@ -26,8 +30,13 @@ export default function TabOneScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    borderColor: 'blue',
-    height: '100%'
+    flex: 1,
+    flexDirection: 'column'
+  },
+  item: {
+    backgroundColor: '#ccc',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
   },
 });
