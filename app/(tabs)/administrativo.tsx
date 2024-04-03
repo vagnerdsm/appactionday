@@ -33,10 +33,12 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column'
   },
+
   item: {
     backgroundColor: '#ccc',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
   },
+
 });
