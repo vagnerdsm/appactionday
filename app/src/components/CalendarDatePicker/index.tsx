@@ -33,7 +33,7 @@ const CalendarDatePicker = () => {
             console.log(data)
             router.replace("../../(tabs)/home")
 
-            userApiService.updateData(data)
+            // userApiService.updateData(data)
         } catch (error) {
             console.log(error);
         }
