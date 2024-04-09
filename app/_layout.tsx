@@ -8,6 +8,8 @@ import React from 'react'
 import { useColorScheme } from '@/components/useColorScheme';
 import { authClient } from '@/supabaseClient';
 import { Session } from '@supabase/supabase-js';
+import CalendarDatePicker from './src/components/CalendarDatePicker';
+import home from './(tabs)/home';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -64,7 +66,7 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
-  
+
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>

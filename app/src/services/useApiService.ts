@@ -9,7 +9,6 @@ const userApiService = () => {
         const fetchData = async () => {
             try {
                 const fetchedData = await apiRequest('');
-
                 setData(fetchedData);
             } catch (err) {
                 console.error('Erro ao buscar dados:', err);
@@ -21,7 +20,19 @@ const userApiService = () => {
         fetchData();
     }, []);
 
-    return { data, isLoading };
+    const updateData = async () => {
+        setIsLoading(true);
+        try {
+            const fetchedData = await apiRequest('');
+            setData(fetchedData);
+        } catch (err) {
+            console.error('Erro ao buscar dados:', err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return { data, isLoading, updateData };
 };
 
 export default userApiService;

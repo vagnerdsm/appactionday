@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { Button, Text, View } from "react-native";
 import { Calendar } from "react-native-calendars";
 import apiRequest from "@/app/src/services/apiService"
+import userApiService from "../../services/useApiService";
+import { useRouter } from "expo-router";
 
 const CalendarDatePicker = () => {
+    const router = useRouter()
+
     const [selected, setSelected] = useState({ startDate: '', endDate: '' });
 
     const handleDaySelection = (day: any) => {
@@ -26,7 +30,10 @@ const CalendarDatePicker = () => {
             const { startDate, endDate } = selected;
             const data = await apiRequest({ startDate, endDate });
 
-            console.log(data);
+            console.log(data)
+            router.replace("../../(tabs)/home")
+
+            userApiService.updateData(data)
         } catch (error) {
             console.log(error);
         }
