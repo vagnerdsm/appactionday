@@ -20,16 +20,10 @@ const userApiService = () => {
         fetchData();
     }, []);
 
-    const updateData = async () => {
-        setIsLoading(true);
-        try {
-            const fetchedData = await apiRequest('');
-            setData(fetchedData);
-        } catch (err) {
-            console.error('Erro ao buscar dados:', err);
-        } finally {
-            setIsLoading(false);
-        }
+    const updateData = (newData: any, callback: () => void) => {
+        setData(newData);
+        setIsLoading(false);
+        callback();
     };
 
     return { data, isLoading, updateData };
