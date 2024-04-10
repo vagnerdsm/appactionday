@@ -14,3 +14,4 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 
 // Access auth admin api    
 export const authClient = supabase.auth
+export const dbClient = supabase

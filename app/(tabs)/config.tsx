@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Text, View } from '@/components/Themed';
-import { Alert, Button, Image, Pressable, Switch, TouchableOpacity, useColorScheme } from 'react-native';
+import { ActivityIndicator, Alert, Button, Image, Pressable, Switch, TouchableOpacity, useColorScheme } from 'react-native';
 import { Link, Redirect, Stack, router } from 'expo-router';
 import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -10,71 +10,55 @@ import { useTheme } from '@react-navigation/native';
 import { authClient } from '@/supabaseClient';
 import { getUserData } from '@/app/src/services/getUserData';
 import { Session } from '@supabase/supabase-js';
+import useGetUser from '../src/hooks/useGetUser';
 
 
 export default function TabConfig() {
-  // const username = auth.currentUser?.displayName
-  // const useremail = auth.currentUser?.emai
   const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState<any>(null)
+  const [userData, setUserData] = useState<any>([])
 
-  useEffect(( ) => {
-    authClient.getUser().then(({ data: { user } }) => {
-      if (user) {
-        setUser(user);
-      } else {
-        Alert.alert("Error accessing user");
-      }
-    })
-  }, [])
-
-  const [userInfo, setUserInfo] = useState<any | undefined>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   // const toggleSwitch = () => useTheme();
 
   const signOut = async () => {
-    const signout = authClient.signOut();
+    authClient.signOut();
     router.replace('/login')
   };
 
-  const fetchData = async () => {
-    // const docRef = doc(db, "users", `${useruid}`);
-    // const docSnap = await getDoc(docRef);
-
-    // if (docSnap.exists()) {
-    //   console.log("Document data:", docSnap.data());
-    //   setUserInfo(docSnap.data());
-    // } else {
-    //   // docSnap.data() will be undefined in this case
-    //   console.log("No such document!");
-    // }
-  };
+  const { colors } = useTheme();
 
   useEffect(() => {
-    // fetchData();
-    // getData();
-  }, []);
-
-  const { colors } = useTheme();
+    const fetchUser = async () => {
+      try {
+        const { data: { user } } = await authClient.getUser()
+        setIsLoading(false)
+        setUserData(user)
+        console.log(user)
+      } catch (error) {
+        Alert.alert('Error')
+      }
+    }
+    fetchUser()
+  }, [])
 
   return (
     <SafeAreaView style={[styles.background]}>
       <Stack.Screen options={{}} />
       <View style={[styles.container]}>
 
+        {isLoading ?
+          <ActivityIndicator size="small" color="#0000ff" /> : (
+            <>
+              <Image source={{ uri: `${userData.user_metadata?.photo_url}` }} style={styles.imageProfile} />
+              <Text style={styles.textHeader}> {userData?.user_metadata?.display_name} </Text>
+            </>
+          )
+        }
 
-        <Image style={[styles.imageProfile]} source={{ uri: `${userInfo?.photo_url}` }} />
-
-        {/* {imagePlace ? (
-          <Image source={{ uri: `${userInfo.photoURL}` }} style={styles.imageProfile} />
-        ) : (
-          <></>
-        )} */}
-
-        <Text style={styles.textHeader}> {userInfo?.display_name} </Text>
-        <Text style={styles.textEmail}> {userInfo?.email} </Text>
+        <Text style={styles.textEmail}> {userData?.email} </Text>
 
         <View style={[styles.optionsMenu]}>
 
@@ -90,7 +74,7 @@ export default function TabConfig() {
             </TouchableOpacity>
           </Link>
 
-          <TouchableOpacity onPress={() => (console.log(user))}>
+          <TouchableOpacity onPress={() => (console.log(userData))}>
             <View style={[styles.buttonMenu, styles.shadowProp, styles.elevation]}>
               <View style={styles.buttonContent}>
                 <Text style={styles.buttonText}> Buscar info User </Text>
