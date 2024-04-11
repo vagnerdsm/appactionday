@@ -7,7 +7,8 @@ import { useRouter } from "expo-router";
 
 const CalendarDatePicker = () => {
     const router = useRouter()
-
+    const atualDate = new Date
+    const { updateData } = userApiService();
     const [selected, setSelected] = useState({ startDate: '', endDate: '' });
 
     const handleDaySelection = (day: any) => {
@@ -30,10 +31,10 @@ const CalendarDatePicker = () => {
             const { startDate, endDate } = selected;
             const data = await apiRequest({ startDate, endDate });
 
-            console.log(data)
-            router.replace("../../(tabs)/home")
+            updateData(data, () => {
+                router.replace("../../(tabs)/home")
+            })
 
-            // userApiService.updateData(data)
         } catch (error) {
             console.log(error);
         }
@@ -43,6 +44,7 @@ const CalendarDatePicker = () => {
         <View>
             <Calendar
                 onDayPress={handleDaySelection}
+                // maxDate={atualDate}
                 markedDates={{
                     [selected.startDate]: {
                         selected: true,

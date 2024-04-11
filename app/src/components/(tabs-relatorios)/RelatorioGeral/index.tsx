@@ -3,19 +3,12 @@ import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
 import { Card, ChartBar, MetaCard, userApiService } from '../..'
 
 const FirstRoute = () => {
-    const { data: apiData, isLoading } = userApiService();
-    const [data, setData] = useState<any>(null);
-
-    useEffect(() => {
-
-        setData(apiData);
-
-    }, [isLoading, apiData]);
+    const { data, isLoading } = userApiService();
 
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL'
-    })
+    });
 
     let formatador = new Intl.NumberFormat('pt-BR',
         { minimumFractionDigits: 0, maximumFractionDigits: 2 }
@@ -36,13 +29,13 @@ const FirstRoute = () => {
                 <Card
                     icon="money"
                     name="Vendas RD"
-                    value={data?.vendas_rd}
+                    value={data.vendas_rd}
                     iconColor="#9327F0"
                 />
                 <Card
                     icon="money"
                     name="Faturamento Total"
-                    value={formatter.format(data?.faturamento_total)}
+                    value={formatter.format(data.faturamento_total)}
                     iconColor="#61DE70"
                 />
             </View>
@@ -51,23 +44,23 @@ const FirstRoute = () => {
                 <Card
                     icon="ticket"
                     name="Ticket Médio"
-                    value={formatter.format(data?.faturamento_total / data?.vendas_rd)}
+                    value={formatter.format(data.faturamento_total / data.vendas_rd)}
                     iconColor="#0062FF"
                 />
                 <Card
                     icon="eye"
                     name="Impressões"
-                    value={formatador.format(data?.impressoes)}
+                    value={formatador.format(data.impressoes)}
                     iconColor="#00e6fe"
                 />
             </View>
 
             <View style={styles.rowContainer}>
-                {data?.meta !== 0 && (
+                {data.meta !== 0 && (
                     <MetaCard
-                        vendas={data?.vendas_rd}
-                        meta={data?.meta}
-                        porcentagem={`${Number((data?.vendas_rd / data?.meta)).toFixed(2)}%`}
+                        vendas={data.vendas_rd}
+                        meta={data.meta}
+                        porcentagem={`${Number((data.vendas_rd / data.meta)).toFixed(2)}%`}
                     />
                 )}
             </View>
@@ -75,14 +68,14 @@ const FirstRoute = () => {
             <View style={styles.columnContainer}>
                 <ChartBar
                     title={'Grafico Ticket Medio X Mes'}
-                    label={data?.ticket_por_mes.map((item: { DATE: string; }) => item.DATE)}
-                    data={data?.ticket_por_mes.map((item: { Faturamento: number; }) => item.Faturamento)}
+                    label={data.ticket_por_mes.map((item: { DATE: string; }) => item.DATE)}
+                    data={data.ticket_por_mes.map((item: { Faturamento: number; }) => item.Faturamento)}
                 />
 
                 <ChartBar
                     title={'Vendas Por Mês'}
-                    label={data?.vendas_por_mes.map((item: { DATE: String; }) => item.DATE)}
-                    data={data?.vendas_por_mes.map((item: { Vendas: Number; }) => item.Vendas)}
+                    label={data.vendas_por_mes.map((item: { DATE: String; }) => item.DATE)}
+                    data={data.vendas_por_mes.map((item: { Vendas: Number; }) => item.Vendas)}
                 />
             </View>
         </ScrollView>

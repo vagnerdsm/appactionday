@@ -8,7 +8,7 @@ const apiRequest = async (selected: any) => {
 
     try {
         const response = await axios.get(url);
-
+        console.log('dados direto da API', response.data)
         return response.data;
     } catch (error) {
         console.error('Erro ao fazer a solicitação:', error);
