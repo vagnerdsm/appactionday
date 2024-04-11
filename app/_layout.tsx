@@ -3,9 +3,13 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react'
 import { useColorScheme } from '@/components/useColorScheme';
+import { authClient } from '@/supabaseClient';
+import { Session } from '@supabase/supabase-js';
+import CalendarDatePicker from './src/components/CalendarDatePicker';
+import home from './(tabs)/home';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -42,12 +46,27 @@ export default function RootLayout() {
     return null;
   }
 
+  // const [session, setSession] = useState<Session | null>(null)
+
+  // useEffect(() => {
+  //   authClient.getSession().then(({ data: { session } }) => {
+  //     setSession(session)
+  //   })
+
+  //   authClient.onAuthStateChange((_event, session) => {
+  //     setSession(session)
+  //   })
+  //   console.log(session)
+  // }, [])
+
   return <RootLayoutNav />;
 }
 
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+
+
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>

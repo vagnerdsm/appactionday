@@ -3,8 +3,6 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Pressable, Image, StyleSheet } from 'react-native';
 import { useColorScheme } from '@/components/useColorScheme';
-import { auth, db } from '@/firebaseConfig';
-import { doc, getDoc } from 'firebase/firestore';
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
@@ -26,40 +24,17 @@ const styles = StyleSheet.create({
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
-  // const [userInfo, setUserInfo] = useState<any | undefined>(null);
-  // const useruid = auth.currentUser?.uid.toString()
-
-  // const fetchData = async () => {
-  //   const docRef = doc(db, "users", `${useruid}`);
-  //   const docSnap = await getDoc(docRef);
-
-  //   if (docSnap.exists()) {
-  //     console.log("Document data:", docSnap.data());
-  //     setUserInfo(docSnap.data());
-  //   } else {
-  //     // docSnap.data() will be undefined in this case
-  //     console.log("No such document!");
-  //   }
-  // };
-
   return (
-
     // Configuracoes Tabs
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#0D779E',
+        tabBarActiveTintColor: '#00D7FF',
         headerShown: true,
         headerTitle: 'Bem vindo!',
         tabBarStyle: {
-          backgroundColor: "#FFF",
-          height: 50
+          backgroundColor: "#fff",
 
         },
-        tabBarLabelStyle: {
-          // fontSize: 12,
-          // fontWeight: "bold",
-          marginBottom: 8,
-          },
         headerTitleStyle: {
           color: '#000'
         }
@@ -125,7 +100,7 @@ export default function TabLayout() {
                   />
                 )}
               </Pressable>
-              
+
             </Link>
 
           ),
@@ -139,12 +114,11 @@ export default function TabLayout() {
       <Tabs.Screen
         name="config"
         options={{
-          title: 'Perfil',
-          headerShown: true,
-          headerTitle: "Seu Perfil",
-          
+          title: 'Config',
+          headerShown: false,
 
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+
+          tabBarIcon: ({ color }) => <TabBarIcon name="cog" color={color} />,
 
           headerLeft: () => (
             <Image
@@ -169,13 +143,9 @@ export default function TabLayout() {
           headerStyle: {
             backgroundColor: "#fff"
           },
-          
+
         }}
       />
     </Tabs>
   );
-}
-
-function useState<T>(arg0: null): [any, any] {
-  throw new Error('Function not implemented.');
 }
