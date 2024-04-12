@@ -20,10 +20,9 @@ const userApiService = () => {
         fetchData();
     }, []);
 
-    const updateData = (newData: any, callback: () => void) => {
+    const updateData = (newData: any) => {
         setData(newData);
         setIsLoading(false);
-        callback();
     };
 
     return { data, isLoading, updateData };

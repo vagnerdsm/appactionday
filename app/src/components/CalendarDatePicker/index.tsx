@@ -31,10 +31,9 @@ const CalendarDatePicker = () => {
             const { startDate, endDate } = selected;
             const data = await apiRequest({ startDate, endDate });
 
-            updateData(data, () => {
-                router.replace("../../(tabs)/home")
-            })
+            updateData(data)
 
+            router.replace("../../(tabs)/home")
         } catch (error) {
             console.log(error);
         }
