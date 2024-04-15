@@ -10,6 +10,9 @@ import { authClient } from '@/supabaseClient';
 import { Session } from '@supabase/supabase-js';
 import CalendarDatePicker from './src/components/CalendarDatePicker';
 import home from './(tabs)/home';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient()
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -70,12 +73,14 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        <Stack.Screen name="login" options={{ headerShown: false }} />
-        <Stack.Screen name="editProfileModal" options={{ presentation: 'modal', headerTitle: '' }} />
-      </Stack>
+      <QueryClientProvider client={queryClient}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="login" options={{ headerShown: false }} />
+          <Stack.Screen name="editProfileModal" options={{ presentation: 'modal', headerTitle: '' }} />
+        </Stack>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }

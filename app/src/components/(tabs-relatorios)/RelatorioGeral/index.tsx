@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
 import { Card, ChartBar, MetaCard, userApiService } from '../..'
+import { useApiRequest } from '@/app/src/hooks/useApiRequest';
 
 const FirstRoute = () => {
-    const { data, isLoading } = userApiService();
+    const { data, isLoading } = useApiRequest();
 
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -29,7 +30,7 @@ const FirstRoute = () => {
                 <Card
                     icon="money"
                     name="Vendas RD"
-                    value={data.vendas_rd}
+                    value={data?.vendas_rd}
                     iconColor="#9327F0"
                 />
                 <Card
