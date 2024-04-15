@@ -11,8 +11,14 @@ import { Session } from '@supabase/supabase-js';
 import CalendarDatePicker from './src/components/CalendarDatePicker';
 import home from './(tabs)/home';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { create } from 'zustand'
 
 const queryClient = new QueryClient()
+
+const useStore = create(() => ({
+  startDate: '2023-06-01',
+  endDate: '2023-09-30'
+}))
 
 export {
   // Catch any errors thrown by the Layout component.
