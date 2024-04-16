@@ -1,29 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import apiRequest from "./apiService";
+import { useUserApiService } from "./store";
 
 const userApiService = () => {
-    const [data, setData] = useState<any>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const { data, isLoading, updateData } = useUserApiService();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const fetchedData = await apiRequest('');
-                setData(fetchedData);
+                const fetchedData = await apiRequest("");
+                updateData(fetchedData); 
             } catch (err) {
-                console.error('Erro ao buscar dados:', err);
-            } finally {
-                setIsLoading(false);
+                console.error("Erro ao buscar dados:", err);
             }
         };
 
         fetchData();
-    }, []);
+    }, [updateData]); 
 
-    const updateData = (newData: any) => {
-        setData(newData);
-        setIsLoading(false);
-    };
+    console.log(data);
 
     return { data, isLoading, updateData };
 };

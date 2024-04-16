@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Button, Text, View } from "react-native";
 import { Calendar } from "react-native-calendars";
-import apiRequest from "@/app/src/services/apiService"
+import apiRequest from "@/app/src/services/apiService";
 import userApiService from "../../services/useApiService";
 import { useRouter } from "expo-router";
 
 const CalendarDatePicker = () => {
-    const router = useRouter()
-    const atualDate = new Date
-    const { updateData } = userApiService();
+    const router = useRouter();
+    const atualDate: any = new Date();
+    const { updateData } = userApiService()
     const [selected, setSelected] = useState({ startDate: '', endDate: '' });
 
     const handleDaySelection = (day: any) => {
@@ -29,11 +29,10 @@ const CalendarDatePicker = () => {
             }
 
             const { startDate, endDate } = selected;
-            const data = await apiRequest({ startDate, endDate });
-
-            updateData(data)
-
-            router.replace("../../(tabs)/home")
+            await apiRequest({ startDate, endDate });
+            
+            updateData(startDate, endDate);
+            router.replace("../../(tabs)/home");
         } catch (error) {
             console.log(error);
         }
@@ -43,7 +42,7 @@ const CalendarDatePicker = () => {
         <View>
             <Calendar
                 onDayPress={handleDaySelection}
-                // maxDate={atualDate}
+                maxDate={atualDate}
                 markedDates={{
                     [selected.startDate]: {
                         selected: true,
@@ -65,7 +64,9 @@ const CalendarDatePicker = () => {
                 title="Att"
                 onPress={handleUpdateQuery}
             />
+
         </View>
+
     );
 };
 

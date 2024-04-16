@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
-import { Card, ChartBar, MetaCard, userApiService } from '../..'
+import React from 'react';
+import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native';
+import { Card, ChartBar, MetaCard, userApiService } from '../..';
 import { useApiRequest } from '@/app/src/hooks/useApiRequest';
 
 const FirstRoute = () => {
-    const { data, isLoading } = useApiRequest();
+    const { data, isLoading } = userApiService();
 
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -22,6 +22,8 @@ const FirstRoute = () => {
             </ScrollView>
         );
     }
+
+
 
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -69,14 +71,14 @@ const FirstRoute = () => {
             <View style={styles.columnContainer}>
                 <ChartBar
                     title={'Grafico Ticket Medio X Mes'}
-                    label={data.ticket_por_mes.map((item: { DATE: string; }) => item.DATE)}
-                    data={data.ticket_por_mes.map((item: { Faturamento: number; }) => item.Faturamento)}
+                    label={data.ticket_por_mes.map((item: any) => item.DATE)}
+                    data={data.ticket_por_mes.map((item: any) => item.Faturamento)}
                 />
 
                 <ChartBar
                     title={'Vendas Por Mês'}
-                    label={data.vendas_por_mes.map((item: { DATE: String; }) => item.DATE)}
-                    data={data.vendas_por_mes.map((item: { Vendas: Number; }) => item.Vendas)}
+                    label={data.vendas_por_mes.map((item: any) => item.DATE)}
+                    data={data.vendas_por_mes.map((item: any) => item.Vendas)}
                 />
             </View>
         </ScrollView>
