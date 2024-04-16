@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Text, View } from "react-native";
 import { Calendar } from "react-native-calendars";
-import apiRequest from "@/app/src/services/apiService";
+import apiService from "../../services/apiService";
 import userApiService from "../../services/useApiService";
 import { useRouter } from "expo-router";
 
@@ -29,8 +29,8 @@ const CalendarDatePicker = () => {
             }
 
             const { startDate, endDate } = selected;
-            await apiRequest({ startDate, endDate });
-            
+            await apiService({ startDate, endDate });
+
             updateData(startDate, endDate);
             router.replace("../../(tabs)/home");
         } catch (error) {
@@ -61,7 +61,7 @@ const CalendarDatePicker = () => {
             <Text style={{ fontSize: 22 }}>Data final: {selected.endDate} </Text>
 
             <Button
-                title="Att"
+                title="att"
                 onPress={handleUpdateQuery}
             />
 

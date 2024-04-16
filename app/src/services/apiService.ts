@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiRequest = async (selected: any) => {
+const apiService = async (selected: any) => {
     const fixedStartDate = '2023-06-01';
     const fixedEndDate = '2023-09-30';
 
@@ -12,7 +12,7 @@ const apiRequest = async (selected: any) => {
         return response.data;
     } catch (error) {
         console.error('Erro ao fazer a solicitação:', error);
-    } 
+    }
 };
 
-export default apiRequest;
+export default apiService;

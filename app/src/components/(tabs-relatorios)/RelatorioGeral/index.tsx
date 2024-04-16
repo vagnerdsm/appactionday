@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native';
 import { Card, ChartBar, MetaCard, userApiService } from '../..';
-import { useApiRequest } from '@/app/src/hooks/useApiRequest';
 
 const FirstRoute = () => {
     const { data, isLoading } = userApiService();
@@ -22,8 +21,6 @@ const FirstRoute = () => {
             </ScrollView>
         );
     }
-
-
 
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
