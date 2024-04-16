@@ -1,10 +1,38 @@
-import React from 'react';
-import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, ScrollView, ActivityIndicator, Button } from 'react-native';
 import { Card, ChartBar, MetaCard, userApiService } from '../..';
 import { useApiRequest } from '@/app/src/hooks/useApiRequest';
+import { useStateDate } from '@/app/src/services/stateDate';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
+
 
 const FirstRoute = () => {
-    const { data, isLoading } = userApiService();
+    // const { data, isLoading, error } = useApiRequest();
+
+    const queryclient = useQueryClient()
+
+    const zenddate = useStateDate((state) => state.endDate);
+    const zstartdate = useStateDate((state) => state.startDate);
+
+    const updateDate = useStateDate((state) => state.updateDate)
+
+    const { data, isFetching, error, refetch } = useQuery({
+        queryKey: ['useApiData'],
+        queryFn: async () => {
+            const url = `https://appaction.vercel.app/api/rdstation?squad=educacao&cliente=faex&account_id=2833806533565354&data_inicio=${zstartdate}&data_final=${zenddate}&account_id_google=1918176068`
+
+            try {
+                const response = await axios.get(url);
+                return response.data;
+            } catch (error) {
+                console.error('Erro ao fazer a solicitação:', error);
+            }
+            
+        }
+        
+    })
+
 
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -15,7 +43,7 @@ const FirstRoute = () => {
         { minimumFractionDigits: 0, maximumFractionDigits: 2 }
     );
 
-    if (isLoading) {
+    if (isFetching) {
         return (
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <ActivityIndicator />
@@ -23,10 +51,31 @@ const FirstRoute = () => {
         );
     }
 
+    const handleInvalidate = () => {
+        updateDate('2024-01-01', '2024-02-30')
+        console.log(zstartdate, zenddate)
+        refetch()
+    }
+
+    if (error) {
+        console.log(zstartdate, zenddate);
+        return (
+            <View>
+
+            </View>
+        );
+    }
+
+
 
 
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+
+            <Button
+                title='invalidate'
+                onPress={handleInvalidate}
+            />
 
             <View style={styles.rowContainer}>
                 <Card

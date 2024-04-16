@@ -1,15 +1,16 @@
 import { create } from "zustand";
+import apiRequest from "./apiRequest";
 
-interface StateDateProps {
+
+interface UserApiServiceState {
     startDate: string;
     endDate: string;
-    // isLoading: boolean;
-    updateDate: (newStartDate: string, newEndDate: string) => Promise<void>;
+    updateDate: (startDate: string, endDate: string) => Promise<void>;
 }
 
-export const useStateDate = create<StateDateProps>((set) => ({
-    startDate: '2023-06-01',
-    endDate: '2023-09-30',
+export const useStateDate = create<UserApiServiceState>((set) => ({
+    startDate: '2024-01-01',
+    endDate: '2024-02-02',
     updateDate: async (newStartDate, newEndDate) => {
         set({startDate: newStartDate, endDate: newEndDate})
     },

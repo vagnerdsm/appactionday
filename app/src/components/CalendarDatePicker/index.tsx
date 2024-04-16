@@ -4,6 +4,7 @@ import { Calendar } from "react-native-calendars";
 import apiRequest from "@/app/src/services/apiService";
 import userApiService from "../../services/useApiService";
 import { useRouter } from "expo-router";
+import apiService from "@/app/src/services/apiService";
 
 const CalendarDatePicker = () => {
     const router = useRouter();
@@ -29,7 +30,7 @@ const CalendarDatePicker = () => {
             }
 
             const { startDate, endDate } = selected;
-            await apiRequest({ startDate, endDate });
+            await apiService({ startDate, endDate });
             
             updateData(startDate, endDate);
             router.replace("../../(tabs)/home");

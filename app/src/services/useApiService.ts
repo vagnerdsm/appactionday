@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import apiRequest from "./apiService";
+import apiService from "./apiService";
 import { useUserApiService } from "./store";
 
 const userApiService = () => {
@@ -8,17 +8,16 @@ const userApiService = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const fetchedData = await apiRequest("");
-                updateData(fetchedData); 
+                const fetchedData = await apiService("");
+
+                updateData(fetchedData.startDate, fetchedData.endDate);
             } catch (err) {
                 console.error("Erro ao buscar dados:", err);
             }
         };
 
         fetchData();
-    }, [updateData]); 
-
-    console.log(data);
+    }, [updateData]);
 
     return { data, isLoading, updateData };
 };

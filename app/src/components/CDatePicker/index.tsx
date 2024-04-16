@@ -11,13 +11,7 @@ import { set } from "date-fns";
 const CDatePicker = () => {
     const router = useRouter()
     const atualDate = new Date
-    const { updateData } = userApiService();
     const [selected, setSelected] = useState({ startDate: '', endDate: '' });
-
-    const { refetch } = useQuery({
-        queryKey: ['useApiData', selected],
-        queryFn: () => apiRequest({ selected })
-    })
 
 
     const handleDaySelection = (day: any) => {
@@ -30,23 +24,9 @@ const CDatePicker = () => {
         }
     };
 
-    // const handleUpdateQuery = async () => {
-    //     try {
-    //         if (!selected.endDate) {
-    //             console.error('Por favor, selecione uma data final.');
-    //             return;
-    //         }
+    const handleUpdateQuery = async () => {
 
-    //         const { startDate, endDate } = selected;
-    //         const data = await apiRequest({ startDate, endDate });
-
-    //         updateData(data)
-
-    //         router.replace("../../(tabs)/home")
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
+    };
 
     return (
         <View>
@@ -75,8 +55,8 @@ const CDatePicker = () => {
                 onPress={() => {}}
             />
             <Button
-                title="view state"
-                onPress={() => {}}
+                title="Att"
+                onPress={handleUpdateQuery}
             />
         </View>
     );
