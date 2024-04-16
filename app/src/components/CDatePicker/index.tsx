@@ -3,13 +3,22 @@ import { Button, Text, View } from "react-native";
 import { Calendar } from "react-native-calendars";
 import apiRequest from "@/app/src/services/apiService"
 import userApiService from "../../services/useApiService";
-import { useRouter } from "expo-router";
+import { useGlobalSearchParams, useRouter } from "expo-router";
+import { QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useStore } from "zustand";
+import { set } from "date-fns";
 
-const CalendarDatePicker = () => {
+const CDatePicker = () => {
     const router = useRouter()
     const atualDate = new Date
     const { updateData } = userApiService();
     const [selected, setSelected] = useState({ startDate: '', endDate: '' });
+
+    const { refetch } = useQuery({
+        queryKey: ['useApiData', selected],
+        queryFn: () => apiRequest({ selected })
+    })
+
 
     const handleDaySelection = (day: any) => {
         if (!selected.startDate) {
@@ -21,23 +30,23 @@ const CalendarDatePicker = () => {
         }
     };
 
-    const handleUpdateQuery = async () => {
-        try {
-            if (!selected.endDate) {
-                console.error('Por favor, selecione uma data final.');
-                return;
-            }
+    // const handleUpdateQuery = async () => {
+    //     try {
+    //         if (!selected.endDate) {
+    //             console.error('Por favor, selecione uma data final.');
+    //             return;
+    //         }
 
-            const { startDate, endDate } = selected;
-            const data = await apiRequest({ startDate, endDate });
+    //         const { startDate, endDate } = selected;
+    //         const data = await apiRequest({ startDate, endDate });
 
-            updateData(data)
+    //         updateData(data)
 
-            router.replace("../../(tabs)/home")
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    //         router.replace("../../(tabs)/home")
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
 
     return (
         <View>
@@ -62,11 +71,15 @@ const CalendarDatePicker = () => {
             <Text style={{ fontSize: 22 }}>Data final: {selected.endDate} </Text>
 
             <Button
-                title="Att"
-                onPress={handleUpdateQuery}
+                title="set state"
+                onPress={() => {}}
+            />
+            <Button
+                title="view state"
+                onPress={() => {}}
             />
         </View>
     );
 };
 
-export default CalendarDatePicker;
+export default CDatePicker;

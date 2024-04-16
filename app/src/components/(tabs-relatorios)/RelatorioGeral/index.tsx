@@ -32,7 +32,7 @@ const FirstRoute = () => {
                 <Card
                     icon="money"
                     name="Vendas RD"
-                    value={data?.vendas_rd}
+                    value={data.vendas_rd}
                     iconColor="#9327F0"
                 />
                 <Card
