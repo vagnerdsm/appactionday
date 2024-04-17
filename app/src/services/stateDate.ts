@@ -2,9 +2,12 @@ import { create } from "zustand";
 import apiRequest from "./apiRequest";
 
 const currentDate = new Date();
+const yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
 const threeMonthsAgo = new Date(currentDate.getFullYear(), currentDate.getMonth() - 3, currentDate.getDate());
-const cformat = currentDate.toISOString().split('T')[0];
+const yformat = yesterday.toISOString().split('T')[0];
 const tformat = threeMonthsAgo.toISOString().split('T')[0];
+
 
 interface UserApiServiceState {
     startDate: string;
@@ -12,19 +15,9 @@ interface UserApiServiceState {
     updateDate: (startDate: string, endDate: string) => Promise<void>;
 }
 
-// export interface UserDataProps {
-//     client: string
-//     crm: string
-//     display_name: string
-//     facebook_ads_id: string
-//     google_ads_id: string
-//     photo_url: string
-//     squad: string
-//   }
-
 export const useStateDate = create<UserApiServiceState>((set) => ({
     startDate: `${tformat}`,
-    endDate: `${cformat}`,
+    endDate: `${yformat}`,
     updateDate: async (newStartDate, newEndDate) => {
         set({ startDate: newStartDate, endDate: newEndDate })
     },
