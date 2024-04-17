@@ -1,14 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, ActivityIndicator, Button, Text } from 'react-native';
 import { Card, ChartBar, MetaCard, userApiService } from '../..';
 import { useApiRequest } from '@/app/src/hooks/useApiRequest';
 import { useStateDate } from '@/app/src/services/stateDate';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { authClient } from '@/supabaseClient';
 
 
 const FirstRoute = () => {
     // const { data, isLoading, error } = useApiRequest();
+
+    const [userData, setUserData] = useState<any>([])
+
+    useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const { data: { user } } = await authClient.getUser()
+        //   setIsLoading(false)
+          setUserData(user)
+          console.log(user)
+        } catch (error) {
+        //   Alert.alert('Error')
+        }
+      }
+      fetchUser()
+    }, [])
 
     const zenddate = useStateDate((state) => state.endDate);
     const zstartdate = useStateDate((state) => state.startDate);
@@ -16,7 +33,7 @@ const FirstRoute = () => {
     const { data, isFetching, error, refetch } = useQuery({
         queryKey: ['useApiData'],
         queryFn: async () => {
-            const url = `https://appaction.vercel.app/api/rdstation?squad=educacao&cliente=faex&account_id=2833806533565354&data_inicio=${zstartdate}&data_final=${zenddate}&account_id_google=1918176068`
+            const url = `https://appaction.vercel.app/api/rdstation?squad=${userData.user_metadata?.squad}&cliente=${userData.user_metadata?.client}&account_id=${userData.user_metadata?.facebook_ads_id}&data_inicio=${zstartdate}&data_final=${zenddate}&account_id_google=${userData.user_metadata?.google_ads_id}`
 
             try {
                 const response = await axios.get(url);
@@ -24,9 +41,7 @@ const FirstRoute = () => {
             } catch (error) {
                 console.error('Erro ao fazer a solicitação:', error);
             }
-
         }
-
     })
 
     const formatter = new Intl.NumberFormat('pt-BR', {
@@ -40,9 +55,9 @@ const FirstRoute = () => {
 
     if (isFetching) {
         return (
-            <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-                <ActivityIndicator />
-            </ScrollView>
+            <View style={[styles.container, styles.loading]}>
+                <ActivityIndicator size="large" />
+            </View>
         );
     }
 
@@ -63,10 +78,8 @@ const FirstRoute = () => {
     }
 
 
-
-
     return (
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <ScrollView style={[styles.container]} showsVerticalScrollIndicator={false}>
 
             <View style={styles.rowContainer}>
                 <Card
@@ -146,6 +159,10 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         borderRadius: 16,
     },
+    loading: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });
 
 export default FirstRoute;

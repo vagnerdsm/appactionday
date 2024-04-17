@@ -6,21 +6,21 @@ import { authClient } from '@/supabaseClient';
 
 export default function NotFoundScreen() {
 
-  // useEffect(() => {
-  //   authClient.getSession().then(({ data: { session } }) => {
-  //     if (session) {
-  //       router.replace('/(tabs)/home')
-  //     }
-  //   });
+  useEffect(() => {
+    authClient.getSession().then(({ data: { session } }) => {
+      if (session) {
+        router.replace('/(tabs)/home')
+      }
+    });
 
-  //   authClient.onAuthStateChange((_event, session) => {
-  //     if (session) {
-  //       router.replace('/(tabs)/home')
-  //     } else {
-  //       router.replace('/login')
-  //     }
-  //   })
-  // }, [])
+    authClient.onAuthStateChange((_event, session) => {
+      if (session) {
+        router.replace('/(tabs)/home')
+      } else {
+        router.replace('/login')
+      }
+    })
+  }, [])
 
   return (
     <>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Button, Text, View } from "react-native";
+import { ActivityIndicator, Button, Text, View } from "react-native";
 import { Calendar } from "react-native-calendars";
-import apiRequest from "@/app/src/services/apiService"
 import userApiService from "../../services/useApiService";
 import { useGlobalSearchParams, useRouter } from "expo-router";
 import { QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -13,7 +12,8 @@ const CDatePicker = () => {
     const router = useRouter()
     const atualDate = new Date
     const [selected, setSelected] = useState({ startDate: '', endDate: '' });
-
+    const [ isLoading, setIsLoading ] = useState(false)
+ 
     
     const { refetch } = useQuery({
         queryKey: ['useApiData']
@@ -35,15 +35,23 @@ const CDatePicker = () => {
     };
 
     const handleUpdateQuery = async () => {
-
+        setIsLoading(true);
         await updateDate(selected.startDate, selected.endDate);
         await setTimeout(async () => {
             console.log(zstartdate, zenddate);
             router.replace("../../(tabs)/home");
             refetch()
+            setIsLoading(false);
         }, 1000)
 
     };
+    if(isLoading){
+        return(
+            <View>
+                <Text>Carregando os dados...</Text>
+            </View>
+        )
+    }
 
     return (
         <View>
