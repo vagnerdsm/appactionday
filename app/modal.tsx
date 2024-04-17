@@ -8,8 +8,8 @@ export default function ModalScreen() {
 
   return (
     <View style={styles.container}>
-      <Text >Data</Text>
-      <CalendarDatePicker />
+
+      <CDatePicker />
     </View>
   );
 }

@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import apiRequest from "./apiService";
+import apiService from "./apiService";
 
 interface UserApiServiceState {
     data: any;
@@ -12,7 +13,7 @@ export const useUserApiService = create<UserApiServiceState>((set) => ({
     isLoading: true,
     updateData: async (startDate, endDate) => {
         try {
-            const newData = await apiRequest({ startDate, endDate });
+            const newData = await apiService({ startDate, endDate });
 
             set({ data: newData, isLoading: false });
         } catch (error) {

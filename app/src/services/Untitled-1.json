@@ -1,0 +1,41 @@
+{
+    "app_metadata": {
+        "provider": "email",
+        "providers": [
+            "email"
+        ]
+    },
+    "aud": "authenticated",
+    "confirmed_at": "2024-03-11T17:38:46.03092Z",
+    "created_at": "2024-03-11T17:38:46.028067Z",
+    "email": "uri@gmail.com",
+    "email_confirmed_at": "2024-03-11T17:38:46.03092Z",
+    "id": "1e2d8262-9bee-459b-930d-5812d2eb322b",
+    "identities": [
+        {
+            "created_at": "2024-03-11T17:38:46.029086Z",
+            "email": "uri@gmail.com",
+            "id": "1e2d8262-9bee-459b-930d-5812d2eb322b",
+            
+            "identity_id": "cf15e08d-933f-487c-a5bf-8d6d8e07faed",
+            "last_sign_in_at": "2024-03-11T17:38:46.029036Z",
+            "provider": "email",
+            "updated_at": "2024-03-11T17:38:46.029086Z",
+            "user_id": "1e2d8262-9bee-459b-930d-5812d2eb322b"
+        }
+    ],
+    "is_anonymous": false,
+    "last_sign_in_at": "2024-04-10T20:53:25.216571Z",
+    "phone": "",
+    "role": "authenticated",
+    "updated_at": "2024-04-10T20:53:25.218135Z",
+    "user_metadata": {
+        "client": "uri",
+        "crm": "rdstation",
+        "display_name": "URI",
+        "facebook_ads_id": "122388731196060 ",
+        "google_ads_id": "2488912156",
+        "photo_url": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRYj5roEY2YbhN4zOe_nx6X5F1pTmYdZkfAxLhp_1ZVVH4JsxYd",
+        "squad": "educacao"
+    }
+}

@@ -35,7 +35,7 @@ const CalendarDatePicker = () => {
 
             const { startDate, endDate } = selected;
             await apiService({ startDate, endDate });
-
+            
             updateData(startDate, endDate);
             router.replace("../../(tabs)/home");
         } catch (error) {
