@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, ScrollView, ActivityIndicator, Button } from 'react-native';
+import { StyleSheet, View, ScrollView, ActivityIndicator, Button, Text } from 'react-native';
 import { Card, ChartBar, MetaCard, userApiService } from '../..';
 import { useApiRequest } from '@/app/src/hooks/useApiRequest';
 import { useStateDate } from '@/app/src/services/stateDate';
@@ -10,12 +10,8 @@ import axios from 'axios';
 const FirstRoute = () => {
     // const { data, isLoading, error } = useApiRequest();
 
-    const queryclient = useQueryClient()
-
     const zenddate = useStateDate((state) => state.endDate);
     const zstartdate = useStateDate((state) => state.startDate);
-
-    const updateDate = useStateDate((state) => state.updateDate)
 
     const { data, isFetching, error, refetch } = useQuery({
         queryKey: ['useApiData'],
@@ -28,11 +24,10 @@ const FirstRoute = () => {
             } catch (error) {
                 console.error('Erro ao fazer a solicitação:', error);
             }
-            
-        }
-        
-    })
 
+        }
+
+    })
 
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -51,17 +46,18 @@ const FirstRoute = () => {
         );
     }
 
-    const handleInvalidate = () => {
-        updateDate('2024-01-01', '2024-02-30')
-        console.log(zstartdate, zenddate)
+    const handleInvalidate = async () => {
         refetch()
     }
+
 
     if (error) {
         console.log(zstartdate, zenddate);
         return (
             <View>
-
+                <Text>Tivemos um erro ao carregar os dados!</Text>
+                <Text>Por favor, tente novamente ou entre em contato com o suporte técnico.</Text>
+                <Button title="Atualizar" onPress={handleInvalidate} />
             </View>
         );
     }
@@ -71,11 +67,6 @@ const FirstRoute = () => {
 
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-
-            <Button
-                title='invalidate'
-                onPress={handleInvalidate}
-            />
 
             <View style={styles.rowContainer}>
                 <Card
