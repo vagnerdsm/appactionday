@@ -7,15 +7,20 @@ import { useRouter } from "expo-router";
 
 const CalendarDatePicker = () => {
     const router = useRouter();
-    const atualDate: any = new Date();
+    let atualDate: any = new Date();
     const { updateData } = userApiService()
     const [selected, setSelected] = useState({ startDate: '', endDate: '' });
 
     const handleDaySelection = (day: any) => {
+        console.log(day.dateString)
         if (!selected.startDate) {
             setSelected({ ...selected, startDate: day.dateString });
         } else if (!selected.endDate) {
-            setSelected({ ...selected, endDate: day.dateString });
+            if (new Date(day.dateString) >= new Date(selected.startDate)) {
+                setSelected({ ...selected, endDate: day.dateString });
+            } else {
+                console.error('Data Final não pode ser anterior que a data inicial')
+            }
         } else {
             setSelected({ startDate: day.dateString, endDate: '' });
         }
@@ -36,6 +41,7 @@ const CalendarDatePicker = () => {
         } catch (error) {
             console.log(error);
         }
+
     };
 
     return (
