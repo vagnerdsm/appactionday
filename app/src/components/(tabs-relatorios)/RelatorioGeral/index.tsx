@@ -17,7 +17,6 @@ const FirstRoute = () => {
           const { data: { user } } = await authClient.getUser()
         //   setIsLoading(false)
           setUserData(user)
-          console.log(user)
         } catch (error) {
         //   Alert.alert('Error')
         }

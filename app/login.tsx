@@ -29,10 +29,14 @@ export default function TabOneScreen() {
       email: email,
       password: password,
     })
-    Alert.alert("Logado!")
-    if (error) Alert.alert(error.message)
-    setLoading(false)
-    router.replace("/(tabs)/home")
+    if (error) {
+      Alert.alert(error.message)
+      router.replace("/login")
+      setLoading(false)
+    } else {
+      Alert.alert("Logado!")
+      router.replace("/(tabs)/home")
+    }
   }
 
 
