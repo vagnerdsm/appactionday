@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, ActivityIndicator, Button, Text, Alert } from 'react-native';
-import { Card, ChartBar, MetaCard } from '../..';
+import { Card, ChartBar, MetaCard, userApiService } from '../..';
 import { useAll } from '@/app/src/hooks/useAll';
+import { useStateDate } from '@/app/src/services/stateDate';
+
 
 const FirstRoute = () => {
-    const { data, error, isError, refetch, isPending } = useAll()
+    // const { data, isLoading, error } = useApiRequest();
+
+    const { data, isFetchingUser, isFetchingData, refetch, datastatus, userstatus, dataerror, usererror } = useAll()
 
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -15,7 +19,7 @@ const FirstRoute = () => {
         { minimumFractionDigits: 0, maximumFractionDigits: 2 }
     );
 
-    if (isPending) {
+    if (isFetchingData || isFetchingUser) {
         return (
             <View style={[styles.container, styles.loading]}>
                 <ActivityIndicator size="large" />
@@ -27,8 +31,9 @@ const FirstRoute = () => {
         refetch()
     }
 
-    if (isError) {
-        console.error(error);
+
+    if (dataerror || usererror) {
+        console.error(dataerror, usererror);
         return (
             <View>
                 <Text>Tivemos um erro ao carregar os dados!</Text>
@@ -40,6 +45,7 @@ const FirstRoute = () => {
 
 
     return (
+        
         <ScrollView style={[styles.container]} showsVerticalScrollIndicator={false}>
 
             <View style={styles.rowContainer}>
@@ -96,9 +102,8 @@ const FirstRoute = () => {
                 />
             </View>
         </ScrollView>
-    )
-}
-
+    );
+};
 
 const styles = StyleSheet.create({
     container: {

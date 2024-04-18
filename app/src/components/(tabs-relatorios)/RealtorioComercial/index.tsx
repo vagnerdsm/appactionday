@@ -15,14 +15,7 @@ const generateColor = () => {
 }
 
 const ThirdRoute = () => {
-    const {
-        data,
-        isFetchingData,
-        isFetchingUser,
-        refetch,
-        usererror,
-        dataerror,
-    } = useAll()
+    const { data, error, isError, refetch, isPending, fetchStatus } = useAll()
 
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -33,7 +26,7 @@ const ThirdRoute = () => {
         { minimumFractionDigits: 0, maximumFractionDigits: 2 }
     );
 
-    if (isFetchingData || isFetchingUser) {
+    if (fetchStatus === 'fetching') {
         return (
             <View style={[styles.container, styles.loading]}>
                 <ActivityIndicator size="large" />
@@ -46,8 +39,8 @@ const ThirdRoute = () => {
     }
 
 
-    if (dataerror || usererror) {
-        console.error(dataerror, usererror);
+    if (isError) {
+        console.error(error);
         return (
             <View>
                 <Text>Tivemos um erro ao carregar os dados!</Text>

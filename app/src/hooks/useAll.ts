@@ -9,9 +9,9 @@ export const useAll = () => {
     const zenddate = useStateDate((state) => state.endDate);
     const zstartdate = useStateDate((state) => state.startDate);
 
-    const {  data: userData, isError: isErrorUser, error: errorUser } = useUser()
+    const {  data: userData } = useUser()
 
-    const { data, refetch, isPending, error, isError  } = useQuery({
+    const { data, refetch, isPending, error, isError, fetchStatus } = useQuery({
         queryKey: ['useApiData'],
         queryFn: async () => {
             const url = `https://appaction.vercel.app/api/rdstation?squad=${userData?.user_metadata?.squad}&cliente=${userData?.user_metadata?.client}&account_id=${userData?.user_metadata?.facebook_ads_id}&data_inicio=${zstartdate}&data_final=${zenddate}&account_id_google=${userData?.user_metadata?.google_ads_id}`
@@ -27,6 +27,6 @@ export const useAll = () => {
         enabled: !!userData
     })
 
-    return { data, isPending, refetch, error, isError   };
+    return { data, isPending, refetch, error, isError, fetchStatus  };
 }
 
