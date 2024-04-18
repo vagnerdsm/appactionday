@@ -82,7 +82,7 @@ function RootLayoutNav() {
       <QueryClientProvider client={queryClient}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Selecione a data' }} />
           <Stack.Screen name="login" options={{ headerShown: false }} />
           <Stack.Screen name="editProfileModal" options={{ presentation: 'modal', headerTitle: '' }} />
         </Stack>
