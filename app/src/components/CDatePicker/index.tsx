@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Button, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Button, Text, View } from "react-native";
 import { Calendar } from "react-native-calendars";
-import userApiService from "../../services/useApiService";
-import { useGlobalSearchParams, useRouter } from "expo-router";
-import { QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useStore } from "zustand";
-import { set } from "date-fns";
+import { useRouter } from "expo-router";
+import { useQuery } from "@tanstack/react-query";
 import { useStateDate } from "../../services/stateDate";
 
 const CDatePicker = () => {
     const router = useRouter()
-    const atualDate = new Date
+    const atualDate: any = new Date
     const [selected, setSelected] = useState({ startDate: '', endDate: '' });
     const [isLoading, setIsLoading] = useState(false)
 
@@ -46,7 +43,7 @@ const CDatePicker = () => {
             router.replace("../../(tabs)/home");
             refetch()
             setIsLoading(false);
-        }, 1000)
+        }, 3000)
 
     };
     if (isLoading) {
@@ -61,7 +58,7 @@ const CDatePicker = () => {
         <View>
             <Calendar
                 onDayPress={handleDaySelection}
-                // maxDate={atualDate}
+                maxDate={atualDate}
                 markedDates={{
                     [selected.startDate]: {
                         selected: true,

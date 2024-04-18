@@ -1,45 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, ScrollView, ActivityIndicator, Button, Text } from 'react-native';
-import { Card, ChartBar, MetaCard, userApiService } from '../..';
-import { useStateDate } from '@/app/src/services/stateDate';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
-import { authClient } from '@/supabaseClient';
+import { StyleSheet, View, ScrollView, ActivityIndicator, Button, Text, Alert } from 'react-native';
+import { Card, ChartBar, MetaCard } from '../..';
+import { useAll } from '@/app/src/hooks/useAll';
 
 const FirstRoute = () => {
-    // const { data, isLoading, error } = useApiRequest();
-
-    const [userData, setUserData] = useState<any>([])
-
-    useEffect(() => {
-      const fetchUser = async () => {
-        try {
-          const { data: { user } } = await authClient.getUser()
-        //   setIsLoading(false)
-          setUserData(user)
-        } catch (error) {
-        //   Alert.alert('Error')
-        }
-      }
-      fetchUser()
-    }, [])
-
-    const zenddate = useStateDate((state) => state.endDate);
-    const zstartdate = useStateDate((state) => state.startDate);
-
-    const { data, isFetching, error, refetch } = useQuery({
-        queryKey: ['useApiData'],
-        queryFn: async () => {
-            const url = `https://appaction.vercel.app/api/rdstation?squad=${userData.user_metadata?.squad}&cliente=${userData.user_metadata?.client}&account_id=${userData.user_metadata?.facebook_ads_id}&data_inicio=${zstartdate}&data_final=${zenddate}&account_id_google=${userData.user_metadata?.google_ads_id}`
-
-            try {
-                const response = await axios.get(url);
-                return response.data;
-            } catch (error) {
-                console.error('Erro ao fazer a solicitação:', error);
-            }
-        }
-    })
+    const {
+        data,
+        isFetchingData,
+        isFetchingUser,
+        refetch,
+        usererror,
+        dataerror,
+    } = useAll()
 
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -50,7 +22,7 @@ const FirstRoute = () => {
         { minimumFractionDigits: 0, maximumFractionDigits: 2 }
     );
 
-    if (isFetching) {
+    if (isFetchingData || isFetchingUser) {
         return (
             <View style={[styles.container, styles.loading]}>
                 <ActivityIndicator size="large" />
@@ -63,8 +35,8 @@ const FirstRoute = () => {
     }
 
 
-    if (error) {
-        console.log(zstartdate, zenddate);
+    if (dataerror || usererror) {
+        console.error(dataerror, usererror);
         return (
             <View>
                 <Text>Tivemos um erro ao carregar os dados!</Text>
@@ -77,6 +49,7 @@ const FirstRoute = () => {
 
 
     return (
+
         <ScrollView style={[styles.container]} showsVerticalScrollIndicator={false}>
 
             <View style={styles.rowContainer}>

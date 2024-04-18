@@ -8,9 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
 import { useTheme } from '@react-navigation/native';
 import { authClient } from '@/supabaseClient';
-import { getUserData } from '@/app/src/services/getUserData';
-import { Session } from '@supabase/supabase-js';
-import useGetUser from '../src/hooks/useGetUser';
+
 
 
 export default function TabConfig() {
@@ -22,6 +20,7 @@ export default function TabConfig() {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   // const toggleSwitch = () => useTheme();
+
 
   const signOut = async () => {
     authClient.signOut();

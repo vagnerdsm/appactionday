@@ -1,10 +1,17 @@
-import { KeyboardAvoidingView, Pressable, StyleSheet, TextInput, TouchableOpacity, Image, ActivityIndicator, AppState, Alert } from 'react-native';
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
-import { useState } from 'react';
-import { Link, Redirect } from 'expo-router';
-import { useRouter } from 'expo-router';
 import React from 'react';
+import {
+  KeyboardAvoidingView,
+  Pressable,
+  StyleSheet,
+  TextInput,
+  Image,
+  ActivityIndicator,
+  AppState,
+  Alert
+} from 'react-native';
+import { Text } from '@/components/Themed';
+import { useState } from 'react';
+import { useRouter } from 'expo-router';
 import { authClient } from '@/supabaseClient';
 
 AppState.addEventListener('change', (state) => {
@@ -16,7 +23,6 @@ AppState.addEventListener('change', (state) => {
 })
 
 export default function TabOneScreen() {
-
   const router = useRouter()
 
   const [password, setPassword] = useState('')
@@ -34,11 +40,9 @@ export default function TabOneScreen() {
       router.replace("/login")
       setLoading(false)
     } else {
-      Alert.alert("Logado!")
       router.replace("/(tabs)/home")
     }
   }
-
 
   return (
     <>
