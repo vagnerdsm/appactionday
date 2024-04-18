@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, ActivityIndicator, Button, Text, Alert } from 'react-native';
-import { Card, ChartBar, MetaCard, userApiService } from '../..';
+import { Card, ChartBar, MetaCard } from '../..';
 import { useAll } from '@/app/src/hooks/useAll';
 import { useStateDate } from '@/app/src/services/stateDate';
 
