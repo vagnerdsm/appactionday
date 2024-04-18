@@ -1,8 +1,7 @@
+import axios from "axios";
+import { useState } from "react";
 import { authClient } from "@/supabaseClient";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { Alert } from "react-native";
 import { useStateDate } from "../services/stateDate";
 import { useUser } from "./useUser";
 
@@ -12,11 +11,7 @@ export const useAll = () => {
 
     const {  data: userData, isError: isErrorUser, error: errorUser } = useUser()
 
-    if(isErrorUser) {
-        console.error(errorUser)
-    }
-
-    const { data, isFetching, refetch, status, error, isError, isSuccess,  } = useQuery({
+    const { data, refetch, isPending, error, isError  } = useQuery({
         queryKey: ['useApiData'],
         queryFn: async () => {
             const url = `https://appaction.vercel.app/api/rdstation?squad=${userData?.user_metadata?.squad}&cliente=${userData?.user_metadata?.client}&account_id=${userData?.user_metadata?.facebook_ads_id}&data_inicio=${zstartdate}&data_final=${zenddate}&account_id_google=${userData?.user_metadata?.google_ads_id}`
@@ -32,6 +27,6 @@ export const useAll = () => {
         enabled: !!userData
     })
 
-    return { data, isFetching, refetch, status, error, isError, isSuccess  };
+    return { data, isPending, refetch, error, isError   };
 }
 

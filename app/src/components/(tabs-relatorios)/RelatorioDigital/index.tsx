@@ -1,6 +1,7 @@
-import React from 'react'
-import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
-import { Card, ChartBar, ChartPie, userApiService } from '../..'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, View, ScrollView, ActivityIndicator, Text, Button } from 'react-native'
+import { Card, ChartBar, ChartPie } from '../..'
+import { useAll } from '@/app/src/hooks/useAll';
 
 const generateColor = () => {
     const letters = '0123456789ABCDEF';
@@ -14,22 +15,38 @@ const generateColor = () => {
 }
 
 const SecondRoute = () => {
-    const { data, isLoading } = userApiService()
+    const { data, error, isError, refetch, isPending } = useAll()
 
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL'
-    })
+    });
 
     let formatador = new Intl.NumberFormat('pt-BR',
         { minimumFractionDigits: 0, maximumFractionDigits: 2 }
     );
 
-    if (isLoading) {
+    if (isPending) {
         return (
-            <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-                <ActivityIndicator />
-            </ScrollView>
+            <View style={[styles.container, styles.loading]}>
+                <ActivityIndicator size="large" />
+            </View>
+        );
+    }
+
+    const handleInvalidate = async () => {
+        refetch()
+    }
+
+
+    if (isError) {
+        console.error(error);
+        return (
+            <View>
+                <Text>Tivemos um erro ao carregar os dados!</Text>
+                <Text>Por favor, tente novamente ou entre em contato com o suporte técnico.</Text>
+                <Button title="Atualizar" onPress={handleInvalidate} />
+            </View>
         );
     }
 
@@ -148,5 +165,9 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         borderRadius: 16,
     },
+    loading: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 
 });
