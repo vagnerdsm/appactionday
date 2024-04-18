@@ -9,6 +9,8 @@ export const useAll = () => {
     const zenddate = useStateDate((state) => state.endDate);
     const zstartdate = useStateDate((state) => state.startDate);
 
+    console.log(zstartdate, zenddate)
+
     const { data: userdata, status: userstatus, error: usererror, isFetching: isFetchingUser } = useQuery({
         queryKey: ['userdata'],
         queryFn: async () => {
@@ -30,9 +32,8 @@ export const useAll = () => {
                 console.error('Erro ao fazer a solicitação:', error);
             }
         },
-        enabled: true
+        // enabled: !!userdata
     })
-
 
     return { data, isFetchingData, isFetchingUser, refetch, userstatus, datastatus, usererror, dataerror };
 }

@@ -47,7 +47,7 @@ const FirstRoute = () => {
     }
 
     return (
-
+        
         <ScrollView style={[styles.container]} showsVerticalScrollIndicator={false}>
 
             <View style={styles.rowContainer}>
