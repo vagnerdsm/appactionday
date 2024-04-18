@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, ScrollView, ActivityIndicator, Text, Button } from 'react-native'
 import { Card, ChartBar, ChartPie } from '../..'
 import { useAll } from '@/app/src/hooks/useAll';
+import Formatadores from '@/app/src/services/formatters';
 
 const generateColor = () => {
     const letters = '0123456789ABCDEF';
@@ -23,15 +24,7 @@ const SecondRoute = () => {
         usererror,
         dataerror,
     } = useAll()
-
-    const formatter = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    });
-
-    let formatador = new Intl.NumberFormat('pt-BR',
-        { minimumFractionDigits: 0, maximumFractionDigits: 2 }
-    );
+    const { formatador, formatter } = Formatadores()
 
     if (isFetchingData || isFetchingUser) {
         return (
@@ -110,8 +103,6 @@ const SecondRoute = () => {
                     ]}
                 />
 
-
-
                 <ChartPie
                     title={"Facebook por objetivo"}
                     data={data?.facebook_objetivo.map((item: { conversoes: number, OBJETIVO: string }) => ({
@@ -126,7 +117,6 @@ const SecondRoute = () => {
                     label={data?.lead_genero.map((lead: { gender: string; }) => lead.gender)}
                     data={data?.lead_genero.map((lead: { conversoes: number; }) => lead.conversoes)}
                 />
-
 
                 <ChartBar
                     title={'Lead Por Idade'}
