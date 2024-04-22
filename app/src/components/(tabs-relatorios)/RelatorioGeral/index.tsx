@@ -1,29 +1,54 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
-import { Card, ChartBar, MetaCard, userApiService } from '../..'
+import React from 'react';
+import {
+    StyleSheet,
+    View,
+    ScrollView,
+    ActivityIndicator,
+    Button,
+    Text
+} from 'react-native';
+import { Card, ChartBar, MetaCard } from '../..';
+import { useAll } from '@/app/src/hooks/useAll';
+import Formatadores from '@/app/src/services/formatters';
 
 const FirstRoute = () => {
-    const { data, isLoading } = userApiService();
+    const {
+        data,
+        isFetchingData,
+        isFetchingUser,
+        refetch,
+        usererror,
+        dataerror,
+    } = useAll()
+    const { formatador, formatter } = Formatadores()
 
-    const formatter = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    });
-
-    let formatador = new Intl.NumberFormat('pt-BR',
-        { minimumFractionDigits: 0, maximumFractionDigits: 2 }
-    );
-
-    if (isLoading) {
+    if (isFetchingData || isFetchingUser) {
         return (
-            <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-                <ActivityIndicator />
-            </ScrollView>
+            <View style={[styles.container, styles.loading]}>
+                <ActivityIndicator size="large" />
+            </View>
+        );
+    }
+
+    const handleInvalidate = async () => {
+        refetch()
+    }
+
+
+    if (dataerror || usererror) {
+        console.error(dataerror, usererror);
+        return (
+            <View>
+                <Text>Tivemos um erro ao carregar os dados!</Text>
+                <Text>Por favor, tente novamente ou entre em contato com o suporte técnico.</Text>
+                <Button title="Atualizar" onPress={handleInvalidate} />
+            </View>
         );
     }
 
     return (
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        
+        <ScrollView style={[styles.container]} showsVerticalScrollIndicator={false}>
 
             <View style={styles.rowContainer}>
                 <Card
@@ -68,14 +93,14 @@ const FirstRoute = () => {
             <View style={styles.columnContainer}>
                 <ChartBar
                     title={'Grafico Ticket Medio X Mes'}
-                    label={data.ticket_por_mes.map((item: { DATE: string; }) => item.DATE)}
-                    data={data.ticket_por_mes.map((item: { Faturamento: number; }) => item.Faturamento)}
+                    label={data.ticket_por_mes.map((item: any) => item.DATE)}
+                    data={data.ticket_por_mes.map((item: any) => item.Faturamento)}
                 />
 
                 <ChartBar
                     title={'Vendas Por Mês'}
-                    label={data.vendas_por_mes.map((item: { DATE: String; }) => item.DATE)}
-                    data={data.vendas_por_mes.map((item: { Vendas: Number; }) => item.Vendas)}
+                    label={data.vendas_por_mes.map((item: any) => item.DATE)}
+                    data={data.vendas_por_mes.map((item: any) => item.Vendas)}
                 />
             </View>
         </ScrollView>
@@ -103,6 +128,10 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         borderRadius: 16,
     },
+    loading: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });
 
 export default FirstRoute;

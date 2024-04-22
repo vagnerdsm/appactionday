@@ -1,6 +1,8 @@
-import React from 'react'
-import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
-import { Card, ChartBar, ChartPie, userApiService } from '../..'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, View, ScrollView, ActivityIndicator, Text, Button } from 'react-native'
+import { Card, ChartBar, ChartPie } from '../..'
+import { useAll } from '@/app/src/hooks/useAll';
+import Formatadores from '@/app/src/services/formatters';
 
 const generateColor = () => {
     const letters = '0123456789ABCDEF';
@@ -14,24 +16,21 @@ const generateColor = () => {
 }
 
 const SecondRoute = () => {
-    const { data, isLoading } = userApiService()
+    const {
+        data,
+        isFetchingData,
+        isFetchingUser,
+        refetch,
+        usererror,
+        dataerror,
+    } = useAll()
+    const { formatador, formatter } = Formatadores()
 
-    const formatter = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    })
 
-    let formatador = new Intl.NumberFormat('pt-BR',
-        { minimumFractionDigits: 0, maximumFractionDigits: 2 }
-    );
-
-    if (isLoading) {
-        return (
-            <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-                <ActivityIndicator />
-            </ScrollView>
-        );
+    const handleInvalidate = async () => {
+        refetch()
     }
+
 
     return (
 
@@ -86,8 +85,6 @@ const SecondRoute = () => {
                     ]}
                 />
 
-
-
                 <ChartPie
                     title={"Facebook por objetivo"}
                     data={data?.facebook_objetivo.map((item: { conversoes: number, OBJETIVO: string }) => ({
@@ -102,7 +99,6 @@ const SecondRoute = () => {
                     label={data?.lead_genero.map((lead: { gender: string; }) => lead.gender)}
                     data={data?.lead_genero.map((lead: { conversoes: number; }) => lead.conversoes)}
                 />
-
 
                 <ChartBar
                     title={'Lead Por Idade'}
@@ -148,5 +144,9 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         borderRadius: 16,
     },
+    loading: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 
 });

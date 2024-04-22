@@ -1,6 +1,8 @@
 import React from 'react'
-import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
-import { Card, ChartPie, ChartLine, userApiService } from '../..'
+import { StyleSheet, View, ScrollView, ActivityIndicator, Text, Button } from 'react-native'
+import { Card, ChartPie, ChartLine } from '../..'
+import { useAll } from '@/app/src/hooks/useAll'
+import Formatadores from '@/app/src/services/formatters'
 
 const generateColor = () => {
     const letters = '0123456789ABCDEF';
@@ -14,15 +16,40 @@ const generateColor = () => {
 }
 
 const ThirdRoute = () => {
-    const { data, isLoading } = userApiService()
+    const {
+        data,
+        isFetchingData,
+        isFetchingUser,
+        refetch,
+        usererror,
+        dataerror,
+    } = useAll()
+    const { formatador, formatter } = Formatadores()
 
-    if (isLoading) {
+
+    if (isFetchingData || isFetchingUser) {
         return (
-            <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-                <ActivityIndicator />
-            </ScrollView>
+            <View style={[styles.container, styles.loading]}>
+                <ActivityIndicator size="large" />
+            </View>
         );
-    };
+    }
+
+    const handleInvalidate = async () => {
+        refetch()
+    }
+
+
+    if (dataerror || usererror) {
+        console.error(dataerror, usererror);
+        return (
+            <View>
+                <Text>Tivemos um erro ao carregar os dados!</Text>
+                <Text>Por favor, tente novamente ou entre em contato com o suporte técnico.</Text>
+                <Button title="Atualizar" onPress={handleInvalidate} />
+            </View>
+        );
+    }
 
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -120,6 +147,10 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         borderRadius: 16,
     },
+    loading: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });
 
 export default ThirdRoute
