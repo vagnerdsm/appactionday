@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, View, ScrollView, ActivityIndicator, Text, Button } from 'react-native'
 import { Card, ChartPie, ChartLine } from '../..'
 import { useAll } from '@/app/src/hooks/useAll'
+import Formatadores from '@/app/src/services/formatters'
 
 const generateColor = () => {
     const letters = '0123456789ABCDEF';
@@ -15,18 +16,18 @@ const generateColor = () => {
 }
 
 const ThirdRoute = () => {
-    const { data, error, isError, refetch, isPending, fetchStatus } = useAll()
+    const {
+        data,
+        isFetchingData,
+        isFetchingUser,
+        refetch,
+        usererror,
+        dataerror,
+    } = useAll()
+    const { formatador, formatter } = Formatadores()
 
-    const formatter = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    });
 
-    let formatador = new Intl.NumberFormat('pt-BR',
-        { minimumFractionDigits: 0, maximumFractionDigits: 2 }
-    );
-
-    if (fetchStatus === 'fetching') {
+    if (isFetchingData || isFetchingUser) {
         return (
             <View style={[styles.container, styles.loading]}>
                 <ActivityIndicator size="large" />
@@ -39,8 +40,8 @@ const ThirdRoute = () => {
     }
 
 
-    if (isError) {
-        console.error(error);
+    if (dataerror || usererror) {
+        console.error(dataerror, usererror);
         return (
             <View>
                 <Text>Tivemos um erro ao carregar os dados!</Text>

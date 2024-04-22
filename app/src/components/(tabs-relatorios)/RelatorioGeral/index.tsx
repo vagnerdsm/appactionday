@@ -1,23 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, ScrollView, ActivityIndicator, Button, Text, Alert } from 'react-native';
+import React from 'react';
+import {
+    StyleSheet,
+    View,
+    ScrollView,
+    ActivityIndicator,
+    Button,
+    Text
+} from 'react-native';
 import { Card, ChartBar, MetaCard } from '../..';
 import { useAll } from '@/app/src/hooks/useAll';
-import { useStateDate } from '@/app/src/services/stateDate';
-
+import Formatadores from '@/app/src/services/formatters';
 
 const FirstRoute = () => {
-    // const { data, isLoading, error } = useApiRequest();
-
-    const { data, isFetchingUser, isFetchingData, refetch, datastatus, userstatus, dataerror, usererror } = useAll()
-
-    const formatter = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    });
-
-    let formatador = new Intl.NumberFormat('pt-BR',
-        { minimumFractionDigits: 0, maximumFractionDigits: 2 }
-    );
+    const {
+        data,
+        isFetchingData,
+        isFetchingUser,
+        refetch,
+        usererror,
+        dataerror,
+    } = useAll()
+    const { formatador, formatter } = Formatadores()
 
     if (isFetchingData || isFetchingUser) {
         return (
@@ -42,7 +45,6 @@ const FirstRoute = () => {
             </View>
         );
     }
-
 
     return (
         
