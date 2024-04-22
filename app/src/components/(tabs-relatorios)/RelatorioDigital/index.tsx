@@ -1,8 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, ScrollView, ActivityIndicator, Text, Button } from 'react-native'
+import React from 'react'
+import {
+    StyleSheet,
+    View,
+    ScrollView,
+    ActivityIndicator,
+    Text,
+    Button
+} from 'react-native'
 import { Card, ChartBar, ChartPie } from '../..'
 import { useAll } from '@/app/src/hooks/useAll';
-import Formatadores from '@/app/src/services/formatters';
+import formatadores from '@/app/src/services/formatters';
 
 const generateColor = () => {
     const letters = '0123456789ABCDEF';
@@ -24,13 +31,24 @@ const SecondRoute = () => {
         usererror,
         dataerror,
     } = useAll()
-    const { formatador, formatter } = Formatadores()
+    const { formatador, formatter } = formatadores()
 
 
     const handleInvalidate = async () => {
         refetch()
     }
 
+
+    if (dataerror || usererror) {
+        console.error(dataerror, usererror);
+        return (
+            <View>
+                <Text>Tivemos um erro ao carregar os dados!</Text>
+                <Text>Por favor, tente novamente ou entre em contato com o suporte técnico.</Text>
+                <Button title="Atualizar" onPress={handleInvalidate} />
+            </View>
+        );
+    }
 
     return (
 

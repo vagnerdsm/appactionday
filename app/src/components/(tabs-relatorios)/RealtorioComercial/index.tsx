@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, View, ScrollView, ActivityIndicator, Text, Button } from 'react-native'
 import { Card, ChartPie, ChartLine } from '../..'
 import { useAll } from '@/app/src/hooks/useAll'
-import Formatadores from '@/app/src/services/formatters'
 
 const generateColor = () => {
     const letters = '0123456789ABCDEF';
@@ -24,7 +23,6 @@ const ThirdRoute = () => {
         usererror,
         dataerror,
     } = useAll()
-    const { formatador, formatter } = Formatadores()
 
 
     if (isFetchingData || isFetchingUser) {
