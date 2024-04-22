@@ -7,9 +7,13 @@ import {
     Button,
     Text
 } from 'react-native';
-import { Card, ChartBar, MetaCard } from '../..';
+import {
+    Card,
+    ChartBar,
+    MetaCard
+} from '../..';
 import { useAll } from '@/app/src/hooks/useAll';
-import Formatadores from '@/app/src/services/formatters';
+import formatadores from '@/app/src/services/formatters';
 
 const FirstRoute = () => {
     const {
@@ -20,7 +24,7 @@ const FirstRoute = () => {
         usererror,
         dataerror,
     } = useAll()
-    const { formatador, formatter } = Formatadores()
+    const { formatador, formatter } = formatadores()
 
     if (isFetchingData || isFetchingUser) {
         return (
@@ -47,7 +51,7 @@ const FirstRoute = () => {
     }
 
     return (
-        
+
         <ScrollView style={[styles.container]} showsVerticalScrollIndicator={false}>
 
             <View style={styles.rowContainer}>

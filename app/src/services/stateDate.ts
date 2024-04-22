@@ -16,7 +16,7 @@ interface UserApiServiceState {
     updateDate: (startDate: string, endDate: string) => Promise<void>;
 }
 
-export const useStateDate = create<UserApiServiceState>((set) => ({
+export const useStateDate: any = create<UserApiServiceState>((set) => ({
     startDate: `${tformat}`,
     endDate: `${yformat}`,
     updateDate: async (newStartDate, newEndDate) => {

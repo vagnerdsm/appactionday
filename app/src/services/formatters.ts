@@ -1,4 +1,4 @@
-const Formatadores = () => {
+const formatadores = () => {
     const formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL'
@@ -11,4 +11,4 @@ const Formatadores = () => {
     return { formatador, formatter }
 }
 
-export default Formatadores
+export default formatadores
