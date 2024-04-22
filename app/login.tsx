@@ -13,6 +13,7 @@ import { Text } from '@/components/Themed';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { authClient } from '@/supabaseClient';
+// import React = require('react');
 
 AppState.addEventListener('change', (state) => {
   if (state === 'active') {

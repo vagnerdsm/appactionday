@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     StyleSheet,
     View,
@@ -14,19 +13,14 @@ import {
 } from '../..';
 import { useAll } from '@/app/src/hooks/useAll';
 import formatadores from '@/app/src/services/formatters';
+import React from 'react';
+// import React = require('react');
 
 const FirstRoute = () => {
-    const {
-        data,
-        isFetchingData,
-        isFetchingUser,
-        refetch,
-        usererror,
-        dataerror,
-    } = useAll()
+    const { data, refetch, isFetching, isError, error } = useAll()
     const { formatador, formatter } = formatadores()
 
-    if (isFetchingData || isFetchingUser) {
+    if (isFetching) {
         return (
             <View style={[styles.container, styles.loading]}>
                 <ActivityIndicator size="large" />
@@ -38,9 +32,8 @@ const FirstRoute = () => {
         refetch()
     }
 
-
-    if (dataerror || usererror) {
-        console.error(dataerror, usererror);
+    if (isError) {
+        console.error(error);
         return (
             <View>
                 <Text>Tivemos um erro ao carregar os dados!</Text>

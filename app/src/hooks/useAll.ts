@@ -9,20 +9,20 @@ export const useAll = () => {
     const zenddate = useStateDate((state: any) => state.endDate);
     const zstartdate = useStateDate((state: any) => state.startDate);
 
-    const { data: userdata, status: userstatus, error: usererror, isFetching: isFetchingUser } = useQuery({
-        queryKey: ['userdata'],
-        queryFn: async () => {
-            await new Promise(resolve => setTimeout(resolve, 500));
-            const { data: { user } } = await authClient.getUser()
-            setUserData(user)
-            return user
-        },
-    })
+    // const { data: userdata, status: userstatus, error: usererror, isFetching: isFetchingUser } = useQuery({
+    //     queryKey: ['userdata'],
+    //     queryFn: async () => {
+    //         await new Promise(resolve => setTimeout(resolve, 500));
+    //         const { data: { user } } = await authClient.getUser()
+    //         setUserData(user)
+    //         return user
+    //     },
+    // })
 
-    const { data, isFetching: isFetchingData, refetch, status: datastatus, error: dataerror } = useQuery({
+    const { data, isFetching, refetch, status, error, isError } = useQuery({
         queryKey: ['userData'],
         queryFn: async () => {
-            const url = `https://appaction.vercel.app/api/rdstation?squad=${userData.user_metadata?.squad}&cliente=${userData.user_metadata?.client}&account_id=${userData.user_metadata?.facebook_ads_id}&data_inicio=${zstartdate}&data_final=${zenddate}&account_id_google=${userData.user_metadata?.google_ads_id}`
+            const url = `https://appaction.vercel.app/api/rdstation?squad=educacao&cliente=uri&account_id=122388731196060&data_inicio=${zstartdate}&data_final=${zenddate}&account_id_google=2488912156`
             // console.log(userData)
 
             try {
@@ -33,8 +33,8 @@ export const useAll = () => {
                 console.error('Erro ao fazer a solicitação:', error);
             }
         },
-        enabled: !!userdata
+        // enabled: !!userdata
 
     })
-    return { data, isFetchingData, isFetchingUser, refetch, userstatus, datastatus, usererror, dataerror };
+    return { data, isFetching, refetch, status, error, isError };
 }

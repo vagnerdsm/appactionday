@@ -11,6 +11,7 @@ import { Card, ChartBar, ChartPie } from '../..'
 import { useAll } from '@/app/src/hooks/useAll';
 import formatadores from '@/app/src/services/formatters';
 
+
 const generateColor = () => {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -25,11 +26,10 @@ const generateColor = () => {
 const SecondRoute = () => {
     const {
         data,
-        isFetchingData,
-        isFetchingUser,
-        refetch,
-        usererror,
-        dataerror,
+        isFetching,
+        isError,
+        error,
+        refetch
     } = useAll()
     const { formatador, formatter } = formatadores()
 
@@ -39,8 +39,8 @@ const SecondRoute = () => {
     }
 
 
-    if (dataerror || usererror) {
-        console.error(dataerror, usererror);
+    if (isError) {
+        console.error(error);
         return (
             <View>
                 <Text>Tivemos um erro ao carregar os dados!</Text>

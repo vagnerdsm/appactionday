@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, View, } from 'react-native'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
 import { FirstRoute, SecondRoute, ThirdRoute } from '../src/components'
+// import React = require('react');
 
 const renderScene = SceneMap({
   first: FirstRoute,
