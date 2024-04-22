@@ -26,29 +26,11 @@ const SecondRoute = () => {
         { minimumFractionDigits: 0, maximumFractionDigits: 2 }
     );
 
-    if (isFetchingData || isFetchingUser) {
-        return (
-            <View style={[styles.container, styles.loading]}>
-                <ActivityIndicator size="large" />
-            </View>
-        );
-    }
 
     const handleInvalidate = async () => {
         refetch()
     }
 
-
-    if (dataerror || usererror) {
-        console.error(dataerror, usererror);
-        return (
-            <View>
-                <Text>Tivemos um erro ao carregar os dados!</Text>
-                <Text>Por favor, tente novamente ou entre em contato com o suporte técnico.</Text>
-                <Button title="Atualizar" onPress={handleInvalidate} />
-            </View>
-        );
-    }
 
     return (
 
