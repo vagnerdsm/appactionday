@@ -33,17 +33,11 @@ const SecondRoute = () => {
     } = useAll()
     const { formatador, formatter } = formatadores()
 
-    if (isFetchingData || isFetchingUser) {
-        return (
-            <View style={[styles.container, styles.loading]}>
-                <ActivityIndicator size="large" />
-            </View>
-        );
-    }
 
     const handleInvalidate = async () => {
         refetch()
     }
+
 
     if (dataerror || usererror) {
         console.error(dataerror, usererror);
